@@ -20,4 +20,7 @@ router.post('/new', function(req, res, next) {
   console.log(req.body.description);
   console.log(req.body.sourceUrl);
   console.log(req.body.targetUrl);
+  //Save to db:
+  
+  
 });
