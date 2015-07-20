@@ -8,7 +8,9 @@ var JobSchema = new Schema({
 	targeUrl: String,
 	name: String,
 	description: String,
-	image: ObjectId
+	sourceImage: ObjectId,
+	targetImage: ObjectId,
+	diffImage: ObjectId
 });
 
-mongoose.model('Job', JobSchema);
+module.exports = mongoose.model('Job', JobSchema);

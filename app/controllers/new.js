@@ -16,11 +16,17 @@ router.get('/new', function(req, res, next) {
 });
 
 router.post('/new', function(req, res, next) {
-  console.log(req.body.name);
-  console.log(req.body.description);
-  console.log(req.body.sourceUrl);
-  console.log(req.body.targetUrl);
+  // var webshot = require('webshot');
+  var name = req.body.name,
+  description = req.body.description,
+  sourceUrl = req.body.sourceUrl,
+  targetUrl = req.body.targetUrl,
+  JobDataStorage = require('../modules/JobDataStorage.js');
+  
+  console.log(name);
+  console.log(description);
+  console.log(sourceUrl);
+  console.log(targetUrl);
   //Save to db:
-  
-  
+  JobDataStorage.processJob(sourceUrl, targetUrl, name, description);
 });
