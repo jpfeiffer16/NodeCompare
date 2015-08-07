@@ -17,6 +17,7 @@ module.exports = (function() {
 		phantom.create(function(err, ph) {
 			return ph.createPage(function(err, page){
 				return page.open(sourceUrl, function(err, stats) {
+					console.log('Page open');
 					var base64 = page.renderBase64('PNG');
 					console.log(base64);
 				});
