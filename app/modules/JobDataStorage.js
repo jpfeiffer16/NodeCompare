@@ -1,4 +1,6 @@
+/* global __dirname */
 module.exports = (function() {
+	//Oh nieve funnly little javascript.....
 	var that = this;
 	var processJob = function(sourceUrl, targetUrl, name, description) {
 		var ObjectId = require('mongoose').Schema.ObjectId;
@@ -12,18 +14,42 @@ module.exports = (function() {
 	// 	var sourceStream = webshot(sourceUrl, options);
 	// 	var targetStream = webshot(targetUrl, options);
 	
-		var phantom = require('node-phantom');
+		// var phantom = require('node-phantom');
+		// 
+		// phantom.create(function(err, ph) {
+		// 	return ph.createPage(function(err, page){
+		// 		return page.open(sourceUrl, function(err, stats) {
+		// 			console.log('Page open');
+		// 			var base64 = page.renderBase64('PNG');
+		// 			console.log(base64);
+		// 		});
+		// 	});
+		// });
+		//
 		
-		phantom.create(function(err, ph) {
-			return ph.createPage(function(err, page){
-				return page.open(sourceUrl, function(err, stats) {
-					console.log('Page open');
-					var base64 = page.renderBase64('PNG');
-					console.log(base64);
+		var phantom = require('phantom');
+		
+		var public_dir = __dirname + '/public';
+		
+		phantom.create(function(ph) {
+			ph.createPage(function(page) {
+				page.open(sourceUrl, function(status) {
+					console.log(sourceUrl + ' opened with status: ' + status.toString());
+					page.renderToBase64(function(result) {
+						console.log(result);
+						page.close();
+						ph.exit();
+					});
+					
 				});
 			});
+		}, {
+			dnodeOpts: {
+				weak: false
+			}
 		});
 		
+		 
 		var sourceImageId;
 		var targetImageId;
 		
