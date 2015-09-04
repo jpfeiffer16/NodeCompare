@@ -29,4 +29,5 @@ router.post('/new', function(req, res, next) {
   console.log(targetUrl);
   //Save to db:
   JobDataStorage.processJob(sourceUrl, targetUrl, name, description);
+  res.write('Done');
 });
