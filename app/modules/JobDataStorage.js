@@ -32,7 +32,7 @@ module.exports = (function () {
 
     phantom.create(function (ph) {
       ph.createPage(function (page) {
-        page.set('viewportSize', { width: 1000});
+        page.set('viewportSize', { width: 1000, height: 300});
         page.open(url, function (status) {
           console.log(url + ' opened with status: ' + status.toString());
           
