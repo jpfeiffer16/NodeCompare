@@ -4,15 +4,31 @@ module.exports = (function () {
   var processJob = function (sourceUrl, targetUrl, name, description, callback) {
     // process.nextTick(function() {
     var ObjectId = require('mongoose').Schema.ObjectId;
-    var sourceData = getImage(sourceUrl);
-    var targetData = getImage(targetUrl);
-    var sourceImageId = saveImageData(sourceData);
-    var targetImageId = saveImageData(targetData);
+    
+    // var sourceImageId;
+    // var targetImageId;
+    
+    saveJobData(name, description, sourceUrl, targetUrl, function(info) {
+      var sourceImageId = info.sourceImageId,
+          targetImageId = info.targetImageId;
+          
+      getImage(sourceUrl).then = function(base64) {
+        saveImageData(base64, sourceImageId);
+      };
+      getImage(targetUrl).then = function(base64) {
+        saveImageData(base64, targetImageId);
+      };
+    });
+    
+    
+    // var targetData = getImage(targetUrl);
+    // var sourceImageId = saveImageData(sourceData).then(function(bas) {});
+    // var targetImageId = saveImageData(targetData);
     
     
     
-    console.log(sourceImageId, targetImageId);
-    saveJobData(name, description, sourceUrl, targetUrl, sourceImageId, targetImageId, new ObjectId);
+    
+    // saveJobData(name, description, sourceUrl, targetUrl, sourceImageId, targetImageId, new ObjectId);
     
     if (typeof(callback) == 'function') {
       callback();
@@ -23,7 +39,9 @@ module.exports = (function () {
   
   
   var getImage = function(url) {
+    var that = this;
     
+    var returnObj = {};
     
     var fs = require('fs');
     var phantom = require('phantom');
@@ -32,7 +50,7 @@ module.exports = (function () {
 
     phantom.create(function (ph) {
       ph.createPage(function (page) {
-        page.set('viewportSize', { width: 1000, height: 300});
+        page.set('viewportSize', { width: 1000, height: 3000});
         page.open(url, function (status) {
           console.log(url + ' opened with status: ' + status.toString());
           
@@ -41,8 +59,14 @@ module.exports = (function () {
               if (err == null) {
                 var base64 = data.toString('base64');
                 console.log('Done Rendering');
-                return base64;
-
+                // return base64;
+                
+                if (typeof(returnObj.then) == 'function') {
+                  returnObj.then(base64);
+                }
+                
+                
+                
 
                 // fs.writeFile(__dirname + fileName + '.txt', base64, function (err) {
                 //   if (err == null) {
@@ -75,7 +99,7 @@ module.exports = (function () {
     
     
    
-    
+    return returnObj;
   }
   
   
@@ -84,12 +108,17 @@ module.exports = (function () {
   
   
   
-  var saveJobData = function (name, description, sourceUrl, targetUrl, sourceImageId, targetImageId, diffImageId) {
+  var saveJobData = function (name, description, sourceUrl, targetUrl, callback) {
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
         ObjectId = Schema.ObjectId;
     var Job = require('../models/job.js');
-    var jobId = new ObjectId;
+    var jobId = mongoose.Types.ObjectId();
+    
+    var sourceImageId = mongoose.Types.ObjectId();
+    var targetImageId = mongoose.Types.ObjectId();
+    
+    // var diffImageId = mongoose.Types.ObjectId();
     var job = new Job({
       _id: jobId,
       name: name,
@@ -98,7 +127,7 @@ module.exports = (function () {
       targetUrl: targetUrl,
       sourceImageId: sourceImageId,
       targetImageId: targetImageId,
-      diffImageId: diffImageId
+      // diffImageId: diffImageId
     });
     console.log('Saving...');
     job.save(function (err) {
@@ -106,19 +135,27 @@ module.exports = (function () {
         console.log('Job Saved');
       } else {
         // return err;
-        throw "Job Not saved";
+        throw err;
+        // throw "Job Not saved";
       }
     });
+    if (typeof(callback) == 'function') {
+      callback({
+        sourceImageId: sourceImageId,
+        targetImageId: targetImageId
+      });
+    }
   };
   
   
   
-  var saveImageData = function (data) {
+  var saveImageData = function (data, id) {
     var mongoose = require('mongoose'),
-      Schema = mongoose.Schema,
-      ObjectId = Schema.ObjectId;
+        Schema = mongoose.Schema,
+        ObjectId = Schema.ObjectId;
     var Image = require('../models/image.js');
-    var id = new ObjectId;
+    // var id = new ObjectId;
+    // var id = mongoose.Types.ObjectId();
 
     var image = new Image({ _id: id, data: data.toString() });
 
@@ -127,7 +164,7 @@ module.exports = (function () {
         console.log('Image Saved');
       } else {
         // return err;
-        console.dir(err);
+        // console.dir(err);
         throw err;
         // throw 'Image not saved.'
       }

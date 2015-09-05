@@ -4,13 +4,13 @@ var mongoose = require('mongoose'),
 	
 var JobSchema = new Schema({
 	_id: ObjectId,
+  name: {type: String},
+	description: {type: String},
 	sourceUrl: String,
 	targeUrl: String,
-	name: String,
-	description: String,
 	sourceImage: ObjectId,
-	targetImage: ObjectId,
-	diffImage: ObjectId
+	targetImage: ObjectId
+	// diffImage: ObjectId
 });
 
 module.exports = mongoose.model('Job', JobSchema);
