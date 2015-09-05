@@ -1,16 +1,24 @@
 /* global __dirname */
 module.exports = (function () {
-  var processJob = function (sourceUrl, targetUrl, name, description) {
+
+  var processJob = function (sourceUrl, targetUrl, name, description, callback) {
+    // process.nextTick(function() {
     var ObjectId = require('mongoose').Schema.ObjectId;
-		var sourceData = getImage(sourceUrl);
+    var sourceData = getImage(sourceUrl);
     var targetData = getImage(targetUrl);
     var sourceImageId = saveImageData(sourceData);
     var targetImageId = saveImageData(targetData);
     
     
     
-    
+    console.log(sourceImageId, targetImageId);
     saveJobData(name, description, sourceUrl, targetUrl, sourceImageId, targetImageId, new ObjectId);
+    
+    if (typeof(callback) == 'function') {
+      callback();
+    }
+    // });
+
   };
   
   
@@ -24,7 +32,7 @@ module.exports = (function () {
 
     phantom.create(function (ph) {
       ph.createPage(function (page) {
-        page.set('viewportSize', { width: 1000, height: 3000 });
+        page.set('viewportSize', { width: 1000});
         page.open(url, function (status) {
           console.log(url + ' opened with status: ' + status.toString());
           
@@ -32,14 +40,17 @@ module.exports = (function () {
             fs.readFile(__dirname + fileName + '.png', function (err, data) {
               if (err == null) {
                 var base64 = data.toString('base64');
+                console.log('Done Rendering');
+                return base64;
 
-                fs.writeFile(__dirname + fileName + '.txt', base64, function (err) {
-                  if (err == null) {
-                    console.log('Contents written to temp text file');
-                  } else {
-                    throw 'Error writting to temp text file';
-                  }
-                });
+
+                // fs.writeFile(__dirname + fileName + '.txt', base64, function (err) {
+                //   if (err == null) {
+                //     console.log('Contents written to temp text file');
+                //   } else {
+                //     throw 'Error writting to temp text file';
+                //   }
+                // });
 								
                 // fs.unlink(__dirname + 'temp.png', function(err) {
                 // 	if (err == null || err == undefined) {
@@ -52,7 +63,6 @@ module.exports = (function () {
                 throw 'Error reading temp file';
               }
             });
-            console.log('Done Rendering');
           });
         });
       });
@@ -64,8 +74,7 @@ module.exports = (function () {
     });
     
     
-    
-    
+   
     
   }
   
@@ -91,11 +100,13 @@ module.exports = (function () {
       targetImageId: targetImageId,
       diffImageId: diffImageId
     });
+    console.log('Saving...');
     job.save(function (err) {
       if (!err) {
         console.log('Job Saved');
       } else {
-        return err;
+        // return err;
+        throw "Job Not saved";
       }
     });
   };
@@ -109,13 +120,16 @@ module.exports = (function () {
     var Image = require('../models/image.js');
     var id = new ObjectId;
 
-    var image = new Image({ _id: id, data: data });
+    var image = new Image({ _id: id, data: data.toString() });
 
     image.save(function (err) {
       if (!err) {
         console.log('Image Saved');
       } else {
-        return err;
+        // return err;
+        console.dir(err);
+        throw err;
+        // throw 'Image not saved.'
       }
     });
     return id;
