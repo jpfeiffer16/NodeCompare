@@ -13,9 +13,11 @@ module.exports = (function () {
           targetImageId = info.targetImageId;
           
       getImage(sourceUrl).then = function(base64) {
+        console.log('Starting to get first image');
         saveImageData(base64, sourceImageId);
       };
       getImage(targetUrl).then = function(base64) {
+        console.log('Starting to get second image');
         saveImageData(base64, targetImageId);
       };
     });

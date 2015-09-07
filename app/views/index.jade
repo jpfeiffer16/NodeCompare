@@ -2,4 +2,18 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  table
+    thead
+      tr
+        td Name
+        td Description
+        td SourceUrl
+        td TargetUrl
+    tbody
+      each item in jobs
+        tr
+          td #{item.name}
+          td #{item.description}
+          td #{item.sourceUrl}
+          td #{item.targetUrl}
+    

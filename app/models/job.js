@@ -6,10 +6,10 @@ var JobSchema = new Schema({
 	_id: ObjectId,
   name: {type: String},
 	description: {type: String},
-	sourceUrl: String,
-	targeUrl: String,
-	sourceImage: ObjectId,
-	targetImage: ObjectId
+	sourceUrl: {type: String},
+	targetUrl: {type: String},
+	sourceImageId: {type: ObjectId},
+	targetImageId: {type: ObjectId}
 	// diffImage: ObjectId
 });
 

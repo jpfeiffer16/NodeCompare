@@ -7,9 +7,21 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
-//TODO Define the route
+router.get('/', function(req, res, next) {
+  console.log('/ being called.');
+  Job.find(function(err, jobs) {
+    if (err) {
+      return next(err);
+    }
+    res.render('list', {
+      title: 'Job List',
+      jobs: jobs
+    });
+  });
+});
 
-router.get('/list', function(req, res, next) {
+router.get('/index', function(req, res, next) {
+  console.log('/ being called.');
   Job.find(function(err, jobs) {
     if (err) {
       return next(err);
