@@ -78,13 +78,13 @@ module.exports = (function () {
                 //   }
                 // });
 								
-                // fs.unlink(__dirname + 'temp.png', function(err) {
-                // 	if (err == null || err == undefined) {
-                // 		console.log('Temp file deleted');
-                // 	} else {
-                // 		throw 'Error deleting the temp file';
-                // 	}
-                // });
+                fs.unlink(__dirname  + fileName + '.png', function(err) {
+                	if (err == null || err == undefined) {
+                		console.log('Temp file deleted');
+                	} else {
+                		throw 'Error deleting the temp file';
+                	}
+                });
               } else {
                 throw 'Error reading temp file';
               }
