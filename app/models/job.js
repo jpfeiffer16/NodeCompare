@@ -8,8 +8,8 @@ var JobSchema = new Schema({
 	description: {type: String},
 	sourceUrl: {type: String},
 	targetUrl: {type: String},
-	sourceImageId: {type: ObjectId},
-	targetImageId: {type: ObjectId}
+	sourceImageId: {type: ObjectId, ref: 'Image'},
+	targetImageId: {type: ObjectId, ref: 'Image'}
 	// diffImage: ObjectId
 });
 

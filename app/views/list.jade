@@ -12,7 +12,8 @@ block content
     tbody
       each item in jobs
         tr
-          td #{item.name}
+          td
+            a(href="details/#{item._id}") #{item.name}
           td #{item.description}
           td #{item.sourceUrl}
           td #{item.targetUrl}
