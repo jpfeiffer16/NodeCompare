@@ -8,7 +8,7 @@ var config = {
     app: {
       name: 'nodecompare'
     },
-    port: 3000,
+    port: process.env.PORT || 3000,
     db: 'mongodb://admin:admin@ds031601.mongolab.com:31601/nodecompare'
   },
 
@@ -17,7 +17,7 @@ var config = {
     app: {
       name: 'nodecompare'
     },
-    port: 3000,
+    port: process.env.PORT || 3000,
     db: 'mongodb://admin:admin@ds031601.mongolab.com:31601/nodecompare'
   },
 
@@ -26,7 +26,7 @@ var config = {
     app: {
       name: 'nodecompare'
     },
-    port: 3000,
+    port: process.env.PORT || 3000,
     db: 'mongodb://admin:admin@ds031601.mongolab.com:31601/nodecompare'
   }
 };
