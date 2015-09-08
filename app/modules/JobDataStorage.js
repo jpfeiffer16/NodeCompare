@@ -1,4 +1,5 @@
 /// <reference path="../../typings/node/node.d.ts"/>
+/// <reference path="../../typings/mongoose/mongoose.d.ts" />
 /* global __dirname */
 module.exports = (function () {
   var processJob = function (sourceUrl, targetUrl, name, description, callback) {
@@ -26,10 +27,10 @@ module.exports = (function () {
   var saveJobData = function (name, description, sourceUrl, targetUrl, callback) {
     var mongoose = require('mongoose');
     var Job = require('../models/job.js');
-    var jobId = mongoose.Types.ObjectId();
+    var jobId = new mongoose.Types.ObjectId();
     
-    var sourceImageId = mongoose.Types.ObjectId();
-    var targetImageId = mongoose.Types.ObjectId();
+    var sourceImageId = new  mongoose.Types.ObjectId();
+    var targetImageId = new mongoose.Types.ObjectId();
     
     // var diffImageId = mongoose.Types.ObjectId();
     var job = new Job({
