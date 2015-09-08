@@ -10,6 +10,36 @@
     },
     "node/node.d.ts": {
       "commit": "afbb279a8217a0cc29fa03862fa1840068f7dd8f"
+    },
+    "phantom/phantom.d.ts": {
+      "commit": "a30103191d2e47836402ace83744424f8ce36815"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/legacy/angular-scenario-1.2.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/angular.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/angular-mocks.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/angular-animate.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/angular-cookies.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/angular-route.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/angular-sanitize.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
+    },
+    "angularjs/angular-resource.d.ts": {
+      "commit": "7f07bd88d1083e995a0dae317a333c9641320cc8"
     }
   }
 }

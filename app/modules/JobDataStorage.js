@@ -1,7 +1,5 @@
-/// <reference path="../../typings/node/node.d.ts"/>
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-/* global __dirname */
-module.exports = (function () {
+/// <reference path="../../typings/tsd.d.ts" />
+module.exports = (function() {
   var processJob = function (sourceUrl, targetUrl, name, description, callback) {
     process.nextTick(function() {
       saveJobData(name, description, sourceUrl, targetUrl, function(info) {
@@ -48,9 +46,7 @@ module.exports = (function () {
       if (!err) {
         console.log('Job Saved');
       } else {
-        // return err;
         throw err;
-        // throw "Job Not saved";
       }
     });
     if (typeof(callback) == 'function') {
@@ -83,14 +79,17 @@ module.exports = (function () {
         var targetImageId = document.targetImageId;
         
         Image.findOneAndRemove({_id: sourceImageId}, function(err, result) {
-          // if (!err) {
-          // }
+          if (err) {
+            throw err;
+          }
           Image.findOneAndRemove({_id: targetImageId}, function(err, result) {
-            // if (!err) {
-            // }
+            if (err) {
+              throw err;
+            }
             Job.findOneAndRemove({_id: id}, function(err, result) {
-              // if (!err) {
-              // }
+              if (err) {
+                throw err;
+              }
               if (typeof(callback) == 'function') {
                 callback();
               }
