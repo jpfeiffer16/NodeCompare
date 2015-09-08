@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/index', function(req, res, next) {
+router.get('/list', function(req, res, next) {
   console.log('/ being called.');
   Job.find(function(err, jobs) {
     if (err) {

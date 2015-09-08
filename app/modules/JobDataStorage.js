@@ -1,119 +1,30 @@
+/// <reference path="../../typings/node/node.d.ts"/>
 /* global __dirname */
 module.exports = (function () {
-
   var processJob = function (sourceUrl, targetUrl, name, description, callback) {
-    // process.nextTick(function() {
-    var ObjectId = require('mongoose').Schema.ObjectId;
-    
-    // var sourceImageId;
-    // var targetImageId;
-    
-    saveJobData(name, description, sourceUrl, targetUrl, function(info) {
-      var sourceImageId = info.sourceImageId,
-          targetImageId = info.targetImageId;
-          
-      getImage(sourceUrl).then = function(base64) {
-        console.log('Starting to get first image');
-        saveImageData(base64, sourceImageId);
-      };
-      getImage(targetUrl).then = function(base64) {
-        console.log('Starting to get second image');
-        saveImageData(base64, targetImageId);
-      };
-    });
-    
-    
-    // var targetData = getImage(targetUrl);
-    // var sourceImageId = saveImageData(sourceData).then(function(bas) {});
-    // var targetImageId = saveImageData(targetData);
-    
-    
-    
-    
-    // saveJobData(name, description, sourceUrl, targetUrl, sourceImageId, targetImageId, new ObjectId);
-    
-    if (typeof(callback) == 'function') {
-      callback();
-    }
-    // });
-
-  };
-  
-  
-  var getImage = function(url) {
-    var that = this;
-    
-    var returnObj = {};
-    
-    var fs = require('fs');
-    var phantom = require('phantom');
-    var fileName = require('node-uuid').v1();
-    console.log(fileName);
-
-    phantom.create(function (ph) {
-      ph.createPage(function (page) {
-        page.set('viewportSize', { width: 1000, height: 3000});
-        page.open(url, function (status) {
-          console.log(url + ' opened with status: ' + status.toString());
-          
-          page.render(__dirname + fileName + '.png', function () {
-            fs.readFile(__dirname + fileName + '.png', function (err, data) {
-              if (err == null) {
-                var base64 = data.toString('base64');
-                console.log('Done Rendering');
-                // return base64;
-                
-                if (typeof(returnObj.then) == 'function') {
-                  returnObj.then(base64);
-                }
-                
-                
-                
-
-                // fs.writeFile(__dirname + fileName + '.txt', base64, function (err) {
-                //   if (err == null) {
-                //     console.log('Contents written to temp text file');
-                //   } else {
-                //     throw 'Error writting to temp text file';
-                //   }
-                // });
-								
-                fs.unlink(__dirname  + fileName + '.png', function(err) {
-                	if (err == null || err == undefined) {
-                		console.log('Temp file deleted');
-                	} else {
-                		throw 'Error deleting the temp file';
-                	}
-                });
-              } else {
-                throw 'Error reading temp file';
-              }
-            });
-          });
-        });
+    process.nextTick(function() {
+      saveJobData(name, description, sourceUrl, targetUrl, function(info) {
+        var sourceImageId = info.sourceImageId,
+            targetImageId = info.targetImageId,
+            ImageGetter = require('./ImageGetter.js');
+            
+        ImageGetter.getImage(sourceUrl).then = function(base64) {
+          console.log('Starting to get first image');
+          saveImageData(base64, sourceImageId);
+        };
+        ImageGetter.getImage(targetUrl).then = function(base64) {
+          console.log('Starting to get second image');
+          saveImageData(base64, targetImageId);
+        };
       });
-    }, 
-      {
-        dnodeOpts: {
-        weak: false
+      if (typeof(callback) == 'function') {
+        callback();
       }
     });
-    
-    
-   
-    return returnObj;
-  }
-  
-  
-  
-  
-  
-  
+  };
   
   var saveJobData = function (name, description, sourceUrl, targetUrl, callback) {
-    var mongoose = require('mongoose'),
-        Schema = mongoose.Schema,
-        ObjectId = Schema.ObjectId;
+    var mongoose = require('mongoose');
     var Job = require('../models/job.js');
     var jobId = mongoose.Types.ObjectId();
     
@@ -149,38 +60,47 @@ module.exports = (function () {
     }
   };
   
-  
-  
   var saveImageData = function (data, id) {
-    var mongoose = require('mongoose'),
-        Schema = mongoose.Schema,
-        ObjectId = Schema.ObjectId;
     var Image = require('../models/image.js');
-    // var id = new ObjectId;
-    // var id = mongoose.Types.ObjectId();
-
     var image = new Image({ _id: id, data: data.toString() });
 
     image.save(function (err) {
       if (!err) {
         console.log('Image Saved');
       } else {
-        // return err;
-        // console.dir(err);
         throw err;
-        // throw 'Image not saved.'
       }
     });
     return id;
   };
 
-
-
-
-
-
-
+  var removeJob = function(id, callback) {
+    var Job = require('../models/job.js');
+    Job.findOne({_id: id}, function(err, document) {
+      if (!err) {
+        var sourceImageId = document.sourceImageId;
+        var targetImageId = document.targetImageId;
+        
+        Image.findOneAndRemove({_id: sourceImageId}, function(err, result) {
+          // if (!err) {
+          // }
+          Image.findOneAndRemove({_id: targetImageId}, function(err, result) {
+            // if (!err) {
+            // }
+            Job.findOneAndRemove({_id: id}, function(err, result) {
+              // if (!err) {
+              // }
+              if (typeof(callback) == 'function') {
+                callback();
+              }
+            });
+          });
+        });
+      }
+    });
+  }
   return {
-    processJob: processJob
+    processJob: processJob,
+    removeJob: removeJob
   };
 })();
