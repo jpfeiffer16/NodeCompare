@@ -8,11 +8,13 @@ html(lang='en' ng-app="app")
       link(rel='stylesheet', href='/css/style.css')
     block js
     script(src="/js/angular/angular.min.js")
+    script(src="/js/angular/angular-route.js")
     script(src="/js/app.js")
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
         
-  body(ng-controller="MainCtrl as main")
+  body(ng-controller="JobListCtrl as jobList")
     block content
-      input(ng-model="main.input" type="text")
-      h5 {{main.input}}
+      input(ng-model="jobList.input" type="text")
+      h5 {{jobList.input}}
+      div(class=ng-view)

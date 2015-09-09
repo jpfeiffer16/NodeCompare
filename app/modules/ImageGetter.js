@@ -82,4 +82,4 @@ module.exports = function() {
     getSavedImageAsBinary: getSavedImageAsBinary,
     getSavedImageAsBase64: getSavedImageAsBase64
   }
-}
+}();

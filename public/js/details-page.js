@@ -11,9 +11,9 @@ var dataURLToBlob = function(dataURL) {
     return new Blob([raw], {type: contentType});
   }
   
-  // var parts = dataURL.split(BASE64_MARKER);
-  // var contentType = parts[0].split(':')[1];
-  // var raw = window.atob(parts[1]);
+  var parts = dataURL.split(BASE64_MARKER);
+  var contentType = parts[0].split(':')[1];
+  var raw = window.atob(parts[1]);
   var rawLength = raw.length;
   var uInt8Array = new Uint8Array(rawLength);
   
