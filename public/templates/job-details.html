@@ -1,0 +1,16 @@
+<div class="content" ng-controller="JobDetailsCtrl as ctrl">
+  <p>
+    <strong>Name: </strong><span>{{job.name}}</span>
+  </p>
+  <p>
+    <strong>Description: </strong><span>{{job.description}}</span>
+  </p>
+  <p>
+    <strong>SourceUrl: </strong><span>{{job.sourceUrl}}</span>
+  </p>
+  <p>
+    <strong>Name: </strong><span>{{job.name}}</span>
+  </p>
+  <img class="preview-image" src="data:image/png;base64,{{job.sourceImageId.data}}" alt="">
+  <img class="preview-image" src="data:image/png;base64,{{job.targetImageId.data}}" alt="">
+</div>

@@ -6,7 +6,7 @@ angular.module('app')
         $scope.job = job;
       });
     } else {
-      //TODO: Define this
+      //TODO: Define this(handle the error gracefully)
     }
     
   });

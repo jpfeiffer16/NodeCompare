@@ -9,11 +9,14 @@ module.exports = function (app) {
 
 router.post('/getJob/:id', function(req, res, next) {
   var id = req.params.id;
-    Job.findOne({_id: id}, function(err, result) {
-    if (!err) {
-      res.send(result);
-    } else {
-      res.status(500).send(err);
-    }
-  });
+    Job.findOne({_id: id})
+    .populate('sourceImageId')
+    .populate('targetImageId')
+    .exec(function(err, result) {
+      if (!err) {
+        res.send(result);
+      } else {
+        res.status(500).send(err);
+      }
+    });
 });

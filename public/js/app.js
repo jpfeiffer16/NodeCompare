@@ -3,16 +3,16 @@ angular.module('app', ['ngRoute'])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: '/templates/job-list.html',
+        templateUrl: '/templates/job-list.html'
         // controller: 'JobListCtrl'
       })
       .when('/new', {
-        templateUrl: '/templates/new-job.html',
-        controller: 'NewJobCtrl'
+        templateUrl: '/templates/new-job.html'
+        // controller: 'NewJobCtrl'
       })
       .when('/details/:id', {
-        templateUrl: '/templates/job-details.html',
-        controller: 'JobDetailsCtrl'
+        templateUrl: '/templates/job-details.html'
+        // controller: 'JobDetailsCtrl'
       })
       .otherwise({
         redirectTo: '/'

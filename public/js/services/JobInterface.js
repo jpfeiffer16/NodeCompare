@@ -12,14 +12,16 @@ angular.module('app')
         });
       };
       function getJob(id, callback) {
-        $http.post().then(function(response) {
+        $http.post('/getJob/' + id).then(function(response) {
           if (typeof(callback) == 'function') {
+            console.log('Job:', response.data);
             callback(response.data);
           }
         });
       }
       return {
-        getJobs: getJobs
+        getJobs: getJobs,
+        getJob: getJob
       };
       // return {
       //   getJobs: function() {
@@ -30,4 +32,4 @@ angular.module('app')
     
     
     return service;
-  })
+  });
