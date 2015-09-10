@@ -10,3 +10,9 @@ router.get('/app', function(req, res, next) {
     title: 'App'
   });
 });
+
+router.get('/', function(req, res, next) {
+  res.render('app', {
+    title: 'App'
+  });
+});

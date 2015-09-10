@@ -3,6 +3,7 @@ html(lang='en' ng-app="app")
   head
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width')
+    base(href="/")
     title= title
     block css
       link(rel='stylesheet', href='/css/style.css')
@@ -10,11 +11,13 @@ html(lang='en' ng-app="app")
     script(src="/js/angular/angular.min.js")
     script(src="/js/angular/angular-route.js")
     script(src="/js/app.js")
+    script(src="/js/controllers/JobListCtrl.js")
+    script(src="/js/controllers/JobDetailsCtrl.js")
+    script(src="/js/controllers/NewJobCtrl.js")
+    script(src="/js/services/JobInterface.js")
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
         
-  body(ng-controller="JobListCtrl as jobList")
+  body(ng-controller="JobListCtrl as main")
     block content
-      input(ng-model="jobList.input" type="text")
-      h5 {{jobList.input}}
-      div(class=ng-view)
+      ng-view
