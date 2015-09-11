@@ -19,12 +19,3 @@ angular.module('app', ['ngRoute'])
       });
     $locationProvider.html5Mode(true);
   });
-  // .controller('JobListCtrl', function($scope) {
-  //   this.input = '';
-  // })
-  // .controller('JobDetailsCtrl', function($scope) {
-  //   this.input = '';
-  // })
-  // .controller('NewJobCtrl', function($scope) {
-  //   this.input = '';
-  // })

@@ -7,5 +7,10 @@ angular.module('app')
       sourceUrl: '',
       targetUrl: ''
     };
-    $scope.newJob.sourceUrl = 'Test';
+    
+    $scope.submit = function() {
+      console.log('Hi');
+    }
+    
+    
   });
