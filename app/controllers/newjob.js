@@ -7,7 +7,16 @@ module.exports = function (app) {
 };
 
 router.post('/newjob', function(req, res, next) {
+  var JobDataStorage = require('../modules/JobDataStorage');
+  
   var jobToAdd = req.body;
+  
+  
+  //TODO: update this architecture
+  JobDataStorage.processJob(jobToAdd.sourceUrl, jobToAdd.targetUrl,jobToAdd.name, jobToAdd.description);
+  
+  res.send({});
+  
   // E.G.: 
   // {
   //   name: '',

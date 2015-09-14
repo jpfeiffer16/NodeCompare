@@ -18,8 +18,16 @@ angular.module('app')
             callback(response.data);
           }
         });
+      };
+      function saveJob(name, description, sourceUrl, targetUrl, callback) {
+        $http.post('/newJob', { name: name, description: description, sourceUrl: sourceUrl, targetUrl: targetUrl }).then(function(response) {
+          if (typeof(callback) == 'function') {
+            callback(response.data);
+          }
+        });
       }
       return {
+        saveJob: saveJob,
         getJobs: getJobs,
         getJob: getJob
       };
