@@ -12,7 +12,9 @@
         <td><a href="/details/{{job._id}}">{{job.name}}</a></td>
         <td>{{job.description}}</td>
         <td>
-          <span class="glyphicon glyphicon-remove" ng-click="deleteJob(job._id)"></span>
+          <span ng-click="deleteJob(job._id)" spinner-morph="15">
+            <span class="glyphicon glyphicon-remove hover-pointer"></span>
+          </span>
         </td>
       </tr>
     </tbody>

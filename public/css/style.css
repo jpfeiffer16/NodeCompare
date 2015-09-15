@@ -11,3 +11,7 @@ a {
   max-width: 300px;
   display: inline;
 }
+
+.hover-pointer:hover {
+  cursor: pointer;
+}
