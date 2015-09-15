@@ -10,8 +10,8 @@ module.exports = function (app) {
 router.post('/getJob/:id', function(req, res, next) {
   var id = req.params.id;
     Job.findOne({_id: id})
-    .populate('sourceImageId')
-    .populate('targetImageId')
+    // .populate('sourceImageId')
+    // .populate('targetImageId')
     .exec(function(err, result) {
       if (!err) {
         res.send(result);

@@ -25,19 +25,20 @@ angular.module('app')
             callback(response.data);
           }
         });
+      };
+      function deleteJob(id, callback) {
+        $http.post('/deleteJob/' + id).then(function(response) {
+          if (typeof(callback) == 'function') {
+            callback(response);
+          }
+        });
       }
       return {
         saveJob: saveJob,
         getJobs: getJobs,
-        getJob: getJob
+        getJob: getJob,
+        deleteJob: deleteJob
       };
-      // return {
-      //   getJobs: function() {
-      //     console.log('getJobs being called');
-      //   }
-      // }
     }();
-    
-    
     return service;
   });

@@ -73,6 +73,7 @@ module.exports = (function() {
 
   var removeJob = function(id, callback) {
     var Job = require('../models/job.js');
+    var Image = require('../models/image.js')
     Job.findOne({_id: id}, function(err, document) {
       if (!err) {
         var sourceImageId = document.sourceImageId;

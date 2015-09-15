@@ -6,10 +6,10 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
-router.post('/deletejob', function(req, res, next) {
-  var id = req.body.id;
+router.post('/deleteJob/:id', function(req, res, next) {
+  var id = req.params.id;
   
   JobDataStorage.removeJob(id, function() {
-    res.send({});
+    res.send({ success: true });
   });
 });
