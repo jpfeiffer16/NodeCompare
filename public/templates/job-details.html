@@ -11,12 +11,8 @@
   <p>
     <strong>Name: </strong><span>{{job.name}}</span>
   </p>
-  
-  
-  <img class="preview-image" src="imageprovider/{{job.sourceImageId}}" alt="">
-  <img class="preview-image" src="imageprovider/{{job.targetImageId}}" alt="">
-  
-  <!--<img class="preview-image" src="data:image/png;base64,{{job.sourceImageId.data}}" alt="">
-  <img class="preview-image" src="data:image/png;base64,{{job.targetImageId.data}}" alt="">-->
+  <img id="sourceImage" class="preview-image" src="imageprovider/{{job.sourceImageId}}" alt="">
+  <img id="targetImage" class="preview-image" src="imageprovider/{{job.targetImageId}}" alt="">
+  <img class="preview-image" src="" resemble-compare source-image="{{job.sourceImageId}}" target-image="{{job.targetImageId}}" alt="">
 </div>
 <script src="../js/resemble.js"></script>

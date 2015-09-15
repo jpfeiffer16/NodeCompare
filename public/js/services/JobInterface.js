@@ -14,7 +14,6 @@ angular.module('app')
       function getJob(id, callback) {
         $http.post('/getJob/' + id).then(function(response) {
           if (typeof(callback) == 'function') {
-            console.log('Job:', response.data);
             callback(response.data);
           }
         });
@@ -29,7 +28,14 @@ angular.module('app')
       function deleteJob(id, callback) {
         $http.post('/deleteJob/' + id).then(function(response) {
           if (typeof(callback) == 'function') {
-            callback(response);
+            callback(response.data);
+          }
+        });
+      };
+      function getImageData(id, callback) {
+        $http.get('/imageprovider/' + id).then(function(response) {
+          if (typeof(callback) == 'function') {
+            callback(response.data);
           }
         });
       }
@@ -37,7 +43,8 @@ angular.module('app')
         saveJob: saveJob,
         getJobs: getJobs,
         getJob: getJob,
-        deleteJob: deleteJob
+        deleteJob: deleteJob,
+        getImageData: getImageData
       };
     }();
     return service;
