@@ -6,9 +6,9 @@ html(lang='en' ng-app="app")
     base(href="/")
     title= title
     block css
-      link(rel='stylesheet', href='/css/style.css')
       link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
       link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css")
+      link(rel='stylesheet', href='/css/style.css')
     block js
       script(src="http://code.jquery.com/jquery-2.1.4.min.js")
       script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
@@ -23,16 +23,25 @@ html(lang='en' ng-app="app")
       script(src="js/directives/NavStatus.js")
       script(src="js/directives/SpinnerMorph.js")
       script(src="js/directives/ResembleCompare.js")
+      script(src="js/directives/SlideOutNav.js")
         if ENV_DEVELOPMENT
           script(src='http://localhost:35729/livereload.js')
         
   body(ng-controller="MainCtrl")
     block content
-      div(class="container")
+      // div(class="container")
         nav
           ul(class="nav nav-tabs nav-justified")
             li(class="active" nav-status)
               a(href="/jobs") Jobs
             li(nav-status)
               a(href="/new") New Job
-        ng-view
+      div(class="slide-out-nav")
+      div(class="ribbon top clearfix")
+        div(class="left")
+          button(class="btn btn-primary nav-toggle" slide-out-nav)
+            span(class="glyphicon glyphicon-th-list")
+        div(class="right")
+          a(class="btn btn-primary" href="/new")
+            span(class="glyphicon glyphicon-plus green")
+      ng-view

@@ -15,3 +15,68 @@ a {
 .hover-pointer:hover {
   cursor: pointer;
 }
+
+body {
+  padding: 0px;
+  background-color: #5F5D67;
+}
+
+.slide-out-nav {
+  width: 300px;
+  height: 100vh;
+  background-color: darkgray;
+  color: white;
+  position: absolute;
+  z-index: 1000;
+  left: -300px;
+}
+
+.slide-out-nav.active {
+  transition: left;
+  transition-duration: 300ms;
+  left: 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.ribbon.top div {
+  display: inline-block;
+}
+
+.ribbon.top .right {
+  float: right;
+}
+
+.ribbon.top {
+  width: 100%;
+  background: darkgray;
+}
+
+.ribbon.top .btn {
+  margin: auto;
+  background-image: inherit;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.ribbon.top .red {
+  color: red;
+}
+
+.ribbon.top .gray {
+ color: lightgray;
+}
+
+.ribbon.top .green {
+  color: green;
+}
