@@ -5,7 +5,7 @@ module.exports = function() {
     
     var fs = require('fs');
     var phantom = require('phantom');
-    var fileName = require('node-uuid').v1();
+    var fileName = require('node-uuid').v4();
     console.log(fileName);
 
     phantom.create(function (ph) {

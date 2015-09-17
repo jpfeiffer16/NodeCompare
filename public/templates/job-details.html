@@ -6,16 +6,34 @@
     <strong>Description: </strong><span>{{job.description}}</span>
   </p>
   <p>
-    <strong>SourceUrl: </strong><span>{{job.sourceUrl}}</span>
-  </p>
-  <p>
-    <strong>TargetUrl: </strong><span>{{job.targetUrl}}</span>
-  </p>
-  <p>
     <strong>Name: </strong><span>{{job.name}}</span>
   </p>
-  <img id="sourceImage" class="preview-image" src="imageprovider/{{job.sourceImageId}}" alt="">
-  <img id="targetImage" class="preview-image" src="imageprovider/{{job.targetImageId}}" alt="">
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <td>SourceImage</td>
+        <td>TargetImage</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="compare in job.compares">
+        <td>
+          <img id="sourceImage" class="preview-image" src="imageprovider/{{compare.sourceImageId}}" alt="">
+        </td>
+        <td>
+          <img id="targetImage" class="preview-image" src="imageprovider/{{compare.targetImageId}}" alt="">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  
+  
+  
+  
+  
   <img class="preview-image" src="" resemble-compare source-image="{{job.sourceImageId}}" target-image="{{job.targetImageId}}" alt="">
 </div>
 <script src="../js/resemble.js"></script>

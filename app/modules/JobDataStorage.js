@@ -2,22 +2,26 @@
 module.exports = (function() {
   var processJob = function (job, callback) {
     process.nextTick(function() {
-      saveJobData(name, description, job, function(compareList) {
-        var ImageGetter = require('./ImageGetter.js');
-            
-       for (var i = 0; i < compareList.length; i++) {
-         var element = compareList[i];
-         ImageGetter.getImage(element.sourceUrl).then = function(base64) {
-           console.log('Getting image ' + i);
-           saveImageData(base64,element.sourceImageId);
-         }
-         ImageGetter.getImage(element.targetUrl).then = function(base64) {
-           console.log('Getting image ' + i);
-           saveImageData(base64,element.targetImageId);
-         }
-       }
-        
-        
+      saveJobData(job, function(jobWithIds) {
+        var ImageGetter = require('./ImageGetter.js'),
+            compareList = jobWithIds.compares;
+        for (var i = 0; i < compareList.length; i++) {
+          var element = compareList[i];
+          (function(element) {
+            ImageGetter.getImage(element.sourceUrl).then = function(base64) {
+              console.log('Getting image ' + i);
+              saveImageData(base64, element.sourceImageId);
+            }
+            ImageGetter.getImage(element.targetUrl).then = function(base64) {
+              console.log('Getting image ' + i);
+              saveImageData(base64, element.targetImageId);
+            }
+          })(element);
+        }
+       
+        if (typeof(callback) == 'function') {
+          callback();
+        }
         
         // ImageGetter.getImage(sourceUrl).then = function(base64) {
         //   console.log('Starting to get first image');
@@ -28,46 +32,49 @@ module.exports = (function() {
         //   saveImageData(base64, targetImageId);
         // };
       });
-      if (typeof(callback) == 'function') {
-        callback();
-      }
     });
   };
   
-  var saveJobData = function (name, description, compareList, callback) {
+  var saveJobData = function (jobWithoutIds, callback) {
     var mongoose = require('mongoose');
     var Job = require('../models/job.js');
     var jobId = new mongoose.Types.ObjectId();
     
-    var sourceImageId = new  mongoose.Types.ObjectId();
-    var targetImageId = new mongoose.Types.ObjectId();
+    // var sourceImageId = new  mongoose.Types.ObjectId();
+    // var targetImageId = new mongoose.Types.ObjectId();
     
     // var diffImageId = mongoose.Types.ObjectId();
     var job = new Job({
       _id: jobId,
-      name: name,
-      description: description,
-      sourceUrl: sourceUrl,
-      targetUrl: targetUrl,
+      name: jobWithoutIds.name,
+      description: jobWithoutIds.description,
       compares: []
     });
     
-    for (var i = 0; i < compareList.length; i++) {
-      var compare = {
-        sourceurl: compareList[i].sourceUrl,
-        targetUrl: compareList[i].targetUrl,
-        sourceImageId: new mongoose.Types.ObjectId(),
-        targetImageId: new mongoose.Types.ObjectId()
-      }
-      job.compares.push(compare);
+    
+    console.log(jobWithoutIds);
+    
+    for (var i = 0; i < jobWithoutIds.compares.length; i++) {
+      // var compare = {
+      //   sourceurl: compareList[i].sourceUrl,
+      //   targetUrl: compareList[i].targetUrl,
+      //   sourceImageId: new mongoose.Types.ObjectId(),
+      //   targetImageId: new mongoose.Types.ObjectId()
+      // }
+      // job.compares.push(compare);
+      
+      jobWithoutIds.compares[i].sourceImageId = new mongoose.Types.ObjectId();
+      jobWithoutIds.compares[i].targetImageId = new mongoose.Types.ObjectId();      
     }
+    
+    job.compares = jobWithoutIds.compares;
     
     console.log('Saving...');
     job.save(function (err) {
       if (!err) {
         console.log('Job Saved');
         if (typeof(callback) == 'function') {
-          callback(job.compares);
+          callback(job);
         }
       } else {
         throw err;
