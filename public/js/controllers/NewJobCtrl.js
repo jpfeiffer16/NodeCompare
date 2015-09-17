@@ -4,13 +4,29 @@ angular.module('app')
     $scope.newJob = {
       name: '',
       description: '',
-      sourceUrl: '',
-      targetUrl: ''
+      compares: [
+        {
+          sourceUrl: '',
+          targetUrl: ''
+        }
+      ]
     };
     
+    
+    $scope.addJob = function() {
+      $scope.newJob.compares.push({
+        sourceUrl: '',
+        targetUrl: ''
+      });
+    }
+    
+    $scope.removeJob = function() {
+      $scope.newJob.compares.pop();
+    }
+    
+    
     $scope.submit = function() {
-      JobInterface.saveJob($scope.newJob.name, $scope.newJob.description,
-         $scope.newJob.sourceUrl, $scope.newJob.targetUrl, function(data) {
+      JobInterface.saveJob($scope.newJob, function(data) {
            $location.path('/');
          });
     }

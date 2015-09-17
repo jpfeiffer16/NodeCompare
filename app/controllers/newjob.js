@@ -13,9 +13,11 @@ router.post('/newjob', function(req, res, next) {
   
   
   //TODO: update this architecture
-  JobDataStorage.processJob(jobToAdd.sourceUrl, jobToAdd.targetUrl,jobToAdd.name, jobToAdd.description);
+  // JobDataStorage.processJob(jobToAdd.sourceUrl, jobToAdd.targetUrl,jobToAdd.name, jobToAdd.description);
   
-  res.send({});
+  // res.send({});
+  
+  res.status(500).send('Under development');
   
   
   

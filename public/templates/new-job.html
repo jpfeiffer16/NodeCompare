@@ -1,13 +1,33 @@
 <div class="content" ng-controller="NewJobCtrl as ctrl">
+  <form>
   
+    
+    
+    
+    <strong>Name: </strong><input class="form-control" ng-model="newJob.name"/>
+    <strong>Description: </strong><input class="form-control" ng-model="newJob.description"/>
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <td>SourceUrl</td>
+          <td>TargetUrl</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="compare in newJob.compares">
+          <td>
+            <input class="form-control" ng-model="compare.sourceUrl"/>
+          </td>
+          <td>
+            <input class="form-control" ng-model="compare.targetUrl"/>          
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <button class="btn btn-primary" ng-click="submit()">Go!</button>
   
-  
-  <strong>Name: </strong><input class="form-control" ng-model="newJob.name"/>
-  <strong>Description: </strong><input class="form-control" ng-model="newJob.description"/>
-  <strong>SourceUrl: </strong><input class="form-control" ng-model="newJob.sourceUrl"/>
-  <strong>TargetUrl: </strong><input class="form-control" ng-model="newJob.targetUrl"/>
-  
-  <button class="btn btn-primary" ng-click="submit()">Go!</button>
-  
+  </form>
   
 </div>
