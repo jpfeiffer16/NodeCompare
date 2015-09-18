@@ -7,6 +7,20 @@ angular.module('app')
       });
     } else {
       //TODO: Define this(handle the error gracefully)
+      $location.url('/');
     }
+    
+    
+    
+    $scope.compare = function (sourceImageId, targetImageId) {
+      JobInterface.getImageData(function(sourceImageData) {
+        JobInterface.getImageData(function(targetImageId) {
+          
+        });
+      });
+    }
+    
+    
+    
     
   });

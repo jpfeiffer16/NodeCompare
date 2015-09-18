@@ -33,7 +33,7 @@ angular.module('app')
         });
       };
       function getImageData(id, callback) {
-        $http.get('/imageprovider/' + id).then(function(response) {
+        $http.get('/imageprovider64/' + id).then(function(response) {
           if (typeof(callback) == 'function') {
             callback(response.data);
           }
