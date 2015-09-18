@@ -5,14 +5,24 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
-router.get('/app', function(req, res, next) {
+var renderApp = function (res) {
   res.render('app', {
     title: 'App'
   });
+}
+//Mirror all the angular views so that we don't get any hanging urls
+router.get('/app', function(req, res, next) {
+  renderApp(res);
 });
 
 router.get('/', function(req, res, next) {
-  res.render('app', {
-    title: 'App'
-  });
+  renderApp(res);
+});
+
+router.get('/details/:id', function(req, res, next) {
+  renderApp(res);
+});
+
+router.get('/new', function(req, res, next) {
+  renderApp(res);
 });

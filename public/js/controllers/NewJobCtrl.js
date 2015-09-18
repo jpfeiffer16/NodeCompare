@@ -5,78 +5,78 @@ angular.module('app')
       name: 'Test',
       description: 'Test',
       compares: [
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        },
-        {
-          sourceUrl: 'https://www.google.com/',
-          targetUrl: 'https://www.google.co.uk/'
-        }
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // },
+        // {
+        //   sourceUrl: 'https://www.google.com/',
+        //   targetUrl: 'https://www.google.co.uk/'
+        // }
       ]
     };
     
@@ -93,6 +93,8 @@ angular.module('app')
                       targetUrl: csv.data[i][1]
                     });
                 }
+                //Get the ui to update
+                $scope.$apply();
             }
         });
     }
