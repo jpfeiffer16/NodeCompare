@@ -14,6 +14,7 @@
       <tr>
         <td>SourceImage</td>
         <td>TargetImage</td>
+        <td>Compare</td>
       </tr>
     </thead>
     <tbody>
@@ -23,6 +24,9 @@
         </td>
         <td>
           <img id="targetImage" class="preview-image" src="imageprovider/{{compare.targetImageId}}" alt="">
+        </td>
+        <td>
+          <img id="targetImage" class="preview-image" src="" compare source-image-id="{{compare.sourceImageId}}" target-image-id="{{compare.targetImageId}}" alt="">
         </td>
       </tr>
     </tbody>
@@ -34,6 +38,6 @@
   
   
   
-  <img class="preview-image" src="" resemble-compare source-image="{{job.sourceImageId}}" target-image="{{job.targetImageId}}" alt="">
+  <!--<img class="preview-image" src="" resemble-compare source-image="{{job.sourceImageId}}" target-image="{{job.targetImageId}}" alt="">-->
 </div>
-<script src="../js/resemble.js"></script>
+<script src="js/resemble.js"></script>

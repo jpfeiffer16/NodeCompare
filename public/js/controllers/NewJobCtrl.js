@@ -1,3 +1,4 @@
+/* global Papa */
 /// <reference path="../../../typings/angularjs/angular.d.ts" />
 angular.module('app')
   .controller('NewJobCtrl', function($scope, $location, JobInterface) {
@@ -85,8 +86,6 @@ angular.module('app')
             delimiter: ',',
             complete: function (csv) {
                 console.log(csv);
-                // var compareList = [];
-                // updateUrlFields(csv.data[1][0], csv.data[1][1], 1);
                 for (var i = 1; i < csv.data.length - 1; i++) {
                     $scope.newJob.compares.push({
                       sourceUrl: csv.data[i][0],
@@ -113,7 +112,7 @@ angular.module('app')
     
     $scope.submit = function() {
       JobInterface.saveJob($scope.newJob, function(data) {
-           $location.path('/');
-         });
+         $location.path('/');
+       });
     }
   });
