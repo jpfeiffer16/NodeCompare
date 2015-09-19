@@ -15,6 +15,7 @@ module.exports = function() {
           console.log(url + ' opened with status: ' + status.toString());
           
           page.render(__dirname + fileName + '.png', function () {
+            ph.exit();
             fs.readFile(__dirname + fileName + '.png', function (err, data) {
               if (err == null) {
                 var base64 = data.toString('base64');
