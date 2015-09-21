@@ -4,19 +4,39 @@ module.exports = (function() {
     process.nextTick(function() {
       saveJobData(job, function(jobWithIds) {
         var ImageGetter = require('./ImageGetter.js'),
-            SouceGetter = require('./SourceGetter.js');
+            PageInfoGetter = require('./PageInfoGetter.js'),
+            // SouceGetter = require('./SourceGetter.js');
             compareList = jobWithIds.compares;
         for (var i = 0; i < compareList.length; i++) {
-          var element = compareList[i];
+          // var element = compareList[i];
+          var element = {};
+          
+          for (var item in compareList) {
+            element[item.key] = item.value
+          }
+          
+          
           (function(element) {
-            ImageGetter.getImage(element.sourceUrl).then = function(base64) {
-              console.log('Getting image ' + i);
-              saveImageData(base64, element.sourceImageId);
-            }
-            ImageGetter.getImage(element.targetUrl).then = function(base64) {
-              console.log('Getting image ' + i);
-              saveImageData(base64, element.targetImageId);
-            }
+            // ImageGetter.getImage(element.sourceUrl).then = function(base64) {
+            //   console.log('Getting image ' + i);
+            //   saveImageData(base64, element.sourceImageId);
+            // }
+            // ImageGetter.getImage(element.targetUrl).then = function(base64) {
+            //   console.log('Getting image ' + i);
+            //   saveImageData(base64, element.targetImageId);
+            // }
+            
+            PageInfoGetter.getInfo(element.sourceUrl).then = function(info) {
+              console.log('Info got 1');
+            };
+            
+            PageInfoGetter.getInfo(element.trgetUrl).then = function(info) {
+              console.log('Info got 2');
+            };
+            
+            
+            
+            
             // SouceGetter.getSource(element.sou);
           })(element);
         }

@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 module.exports = function() {
-  var getImage = function(url) {
+  var getInfo = function(url) {
     var returnObj = {};
     
     var fs = require('fs');
@@ -20,9 +20,16 @@ module.exports = function() {
               if (err == null) {
                 var base64 = data.toString('base64');
                 // console.log('Done Rendering');
-                page
+                var title = page.evaluate(function() {
+                  return document.title;
+                });
+                
+                console.log(title);
                 if (typeof(returnObj.then) == 'function') {
-                  returnObj.then(base64);
+                  returnObj.then({
+                    imageData: base64
+                    // sourceData: source
+                  });
                 }
                 fs.unlink(__dirname  + fileName + '.png', function(err) {
                 	if (err == null || err == undefined) {
@@ -48,7 +55,7 @@ module.exports = function() {
   };
   
   return {
-    getImage: getImage,
+    getInfo: getInfo,
     // getSavedImageAsBinary: getSavedImageAsBinary,
     // getSavedImageAsBase64: getSavedImageAsBase64
   }
