@@ -4,6 +4,7 @@ module.exports = (function() {
     process.nextTick(function() {
       saveJobData(job, function(jobWithIds) {
         var ImageGetter = require('./ImageGetter.js'),
+            SouceGetter = require('./SourceGetter.js');
             compareList = jobWithIds.compares;
         for (var i = 0; i < compareList.length; i++) {
           var element = compareList[i];
@@ -16,6 +17,7 @@ module.exports = (function() {
               console.log('Getting image ' + i);
               saveImageData(base64, element.targetImageId);
             }
+            // SouceGetter.getSource(element.sou);
           })(element);
         }
        

@@ -1,7 +1,7 @@
 /// <reference path="mongoose/mongoose.d.ts" />
 /// <reference path="node/node.d.ts" />
 /// <reference path="phantom/phantom.d.ts" />
-/// <reference path="angular2/angular2.d.ts" />
+// /// <reference path="angular2/angular2.d.ts" />
 /// <reference path="angularjs/angular-animate.d.ts" />
 /// <reference path="angularjs/angular-cookies.d.ts" />
 /// <reference path="angularjs/angular-mocks.d.ts" />

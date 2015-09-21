@@ -31,16 +31,24 @@ body {
   z-index: 20;
 }
 
+.slide-out-nav a {
+  color: white;
+}
+
+.slide-out-nav a:hover {
+  text-decoration: none;
+}
+
 .slide-out-nav {
   transition: left;
   transition-duration: 300ms;
-  width: 300px;
+  width: 250px;
   height: 100vh;
   background-color: darkgray;
   color: white;
   position: fixed;
   z-index: 1000;
-  left: -300px;
+  left: -250px;
   font-size: 16px;
 }
 
@@ -53,7 +61,7 @@ body {
 .slide-out-nav.hidden {
   transition: left;
   transition-duration: 300ms;
-  left: -300px;
+  left: -250px;
 }
 
 .slide-out-nav .title {
@@ -71,15 +79,21 @@ body {
 .slide-out-nav ul {
   width: 100%;
   list-style: none;
-  padding: 0px 5px;
+  padding: 0px 0px;
 }
 
 
 .slide-out-nav ul li {
   width: 100%;
   height: 30px;
-  text-align: center;
+  /*text-align: center;*/
   vertical-align: middle;
+}
+
+.slide-out-nav ul li span {
+  position: relative;
+  left: 5px;
+  top: 5px;
 }
 
 .slide-out-nav ul li:hover {

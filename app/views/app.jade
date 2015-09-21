@@ -32,21 +32,16 @@ html(lang='en' ng-app="app")
         
   body(ng-controller="MainCtrl")
     block content
-      // div(class="container")
-        nav
-          ul(class="nav nav-tabs nav-justified")
-            li(class="active" nav-status)
-              a(href="/jobs") Jobs
-            li(nav-status)
-              a(href="/new") New Job
       div(class="slide-out-nav")
         div(class="title")
           span NodeCompare
         ul
           a(href="/")
-            li Job List
+            li
+              span Job List
           a(href="/new")
-            li New Job
+            li
+              span New Job
       div(id="cover" style="display:none;")
       div(class="ribbon top clearfix")
         div(class="left")
