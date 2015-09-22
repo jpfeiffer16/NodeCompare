@@ -14,8 +14,9 @@ var JobSchema = new Schema({
     {
     	sourceUrl: {type: String},
     	targetUrl: {type: String},
-    	sourceImageId: {type: ObjectId, ref: 'Image'},
-    	targetImageId: {type: ObjectId, ref: 'Image'}
+    	sourceId: {type: ObjectId, ref: 'Image'},
+    	targetId: {type: ObjectId, ref: 'Image'},
+      compareId: {type: ObjectId, ref: 'Image'}
     }
   ]
 });

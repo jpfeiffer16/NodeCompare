@@ -5,54 +5,55 @@ module.exports = (function() {
       saveJobData(job, function(jobWithIds) {
         var ImageGetter = require('./ImageGetter.js'),
             PageInfoGetter = require('./PageInfoGetter.js'),
-            // SouceGetter = require('./SourceGetter.js');
             compareList = jobWithIds.compares;
         for (var i = 0; i < compareList.length; i++) {
-          // var element = compareList[i];
-          var element = {};
-          
-          for (var item in compareList) {
-            element[item.key] = item.value
-          }
-          
-          
+          var element = compareList[i];
           (function(element) {
-            // ImageGetter.getImage(element.sourceUrl).then = function(base64) {
-            //   console.log('Getting image ' + i);
-            //   saveImageData(base64, element.sourceImageId);
-            // }
-            // ImageGetter.getImage(element.targetUrl).then = function(base64) {
-            //   console.log('Getting image ' + i);
-            //   saveImageData(base64, element.targetImageId);
-            // }
+            var sourceImagePromise = require('./PromiseEngine.js');
+            var targetImagePromise = require('./PromiseEngine.js');
+            var sourcePromise = PageInfoGetter.getInfo(element.sourceUrl, element.sourceId);
+            sourcePromise.then(function(info) {
+              // var sourceImageData = info.imageData;
+              sourceImagePromise = saveImageData(info.imageData, element.sourceId);
+              saveSourceData(info.sourceData, element.sourceId);
+              
+              
+              
+            });
             
-            PageInfoGetter.getInfo(element.sourceUrl).then = function(info) {
-              console.log('Info got 1');
-            };
+            var targetPromise = PageInfoGetter.getInfo(element.targetUrl, element.targetId);
+            targetPromise.then(function(info) {
+              targetImagePromise = saveImageData(info.imageData, element.targetId);
+              saveSourceData(info.sourceData, element.targetId);
+
+              // var ImageComparer = require('ImageComparer.js');
+              // 
+              // 
+              // ImageComparer.compareImages(element.sourceId, element.targetId, function(base64) {
+              // });
+            });
+          
+            // sourcePromise.when(sourcePromise, targetPromise).then(function () {
+            //   console.log('when being called');
+            // });
             
-            PageInfoGetter.getInfo(element.trgetUrl).then = function(info) {
-              console.log('Info got 2');
-            };
+            sourceImagePromise.when(sourceImagePromise, targetImagePromise).then(function() {
+              var ImageComparer = require('./ImageComparer.js');
+              
+              ImageComparer.compareImages(element.sourceId, element.targetId, function(data) {
+                saveImageCompareData(data, element.compareId).then(function() {
+                  console.log('Image Compare Saved');
+                });
+              });
+            });
             
             
-            
-            
-            // SouceGetter.getSource(element.sou);
           })(element);
         }
        
         if (typeof(callback) == 'function') {
           callback();
         }
-        
-        // ImageGetter.getImage(sourceUrl).then = function(base64) {
-        //   console.log('Starting to get first image');
-        //   saveImageData(base64, sourceImageId);
-        // };
-        // ImageGetter.getImage(targetUrl).then = function(base64) {
-        //   console.log('Starting to get second image');
-        //   saveImageData(base64, targetImageId);
-        // };
       });
     });
   };
@@ -62,10 +63,7 @@ module.exports = (function() {
     var Job = require('../models/job.js');
     var jobId = new mongoose.Types.ObjectId();
     
-    // var sourceImageId = new  mongoose.Types.ObjectId();
-    // var targetImageId = new mongoose.Types.ObjectId();
     
-    // var diffImageId = mongoose.Types.ObjectId();
     var job = new Job({
       _id: jobId,
       name: jobWithoutIds.name,
@@ -77,16 +75,9 @@ module.exports = (function() {
     console.log(jobWithoutIds);
     
     for (var i = 0; i < jobWithoutIds.compares.length; i++) {
-      // var compare = {
-      //   sourceurl: compareList[i].sourceUrl,
-      //   targetUrl: compareList[i].targetUrl,
-      //   sourceImageId: new mongoose.Types.ObjectId(),
-      //   targetImageId: new mongoose.Types.ObjectId()
-      // }
-      // job.compares.push(compare);
-      
-      jobWithoutIds.compares[i].sourceImageId = new mongoose.Types.ObjectId();
-      jobWithoutIds.compares[i].targetImageId = new mongoose.Types.ObjectId();      
+      jobWithoutIds.compares[i].sourceId = new mongoose.Types.ObjectId();
+      jobWithoutIds.compares[i].targetId = new mongoose.Types.ObjectId();
+      jobWithoutIds.compares[i].compareId = new mongoose.Types.ObjectId();
     }
     
     job.compares = jobWithoutIds.compares;
@@ -105,45 +96,93 @@ module.exports = (function() {
   };
   
   var saveImageData = function (data, id) {
+    var Promise = require('./PromiseEngine.js');
     var Image = require('../models/image.js');
     var image = new Image({ _id: id, data: data.toString() });
 
     image.save(function (err) {
       if (!err) {
         console.log('Image Saved');
+        Promise.resolve(true);
       } else {
         throw err;
       }
     });
-    return id;
+    return Promise;
   };
+  
+  var saveSourceData = function(source, id) {
+    var Promise = require('./PromiseEngine.js');
+    var Source = require('../models/source.js');
+    var source = new Source({ _id: id, data: source.toString() });
+    
+    source.save(function (err) {
+      if (!err) {
+        console.log('Source Saved');
+        Promise.resolve(true);
+      } else {
+        throw err;
+      }
+    });
+    return Promise;
+  }
+  
+  var saveImageCompareData = function(data, id) {
+    var Promise = require('./PromiseEngine.js');
+    var ImageCompare = require('../models/imagecompare.js');
+    var compareImage = new ImageCompare({ _id: id, data: data.toString() });
+    
+    compareImage.save(function (err) {
+      if (!err) {
+        console.log('Compare Image Saved');
+        Promise.resolve(true);
+      } else {
+        throw err;
+      }
+    });
+    return Promise;
+  }
+  
+  
 
   var removeJob = function(id, callback) {
-    var Job = require('../models/job.js');
-    var Image = require('../models/image.js')
+    var Job = require('../models/job.js'),
+        Image = require('../models/image.js'),
+        Source = require('../models/source.js');
     Job.findOne({_id: id}, function(err, document) {
       if (!err) {
-        var sourceImageId = document.sourceImageId;
-        var targetImageId = document.targetImageId;
-        
-        Image.findOneAndRemove({_id: sourceImageId}, function(err, result) {
-          if (err) {
-            throw err;
-          }
-          Image.findOneAndRemove({_id: targetImageId}, function(err, result) {
-            if (err) {
-              throw err;
-            }
-            Job.findOneAndRemove({_id: id}, function(err, result) {
-              if (err) {
-                throw err;
-              }
-              if (typeof(callback) == 'function') {
-                callback();
-              }
+        for (var i = 0; i < document.compares.length; i++) {
+          var element = document.compares[i];
+          (function (element) {
+            var sourceId = element.sourceId,
+                targetId = element.targetId;
+            
+            Image.findOneAndRemove({_id: sourceId}, function (err, document) {
+              //TODO: Find something to do here.
             });
-          });
+            
+            Source.findOneAndRemove({_id: sourceId}, function (err, document) {
+              //TODO: Find something to do here.
+            });
+            
+            Image.findOneAndRemove({_id: targetId}, function (err, document) {
+              //TODO: Find something to do here.
+            });
+            
+            Source.findOneAndRemove({_id: targetId}, function (err, document) {
+              //TODO: Find something to do here.
+            });
+          })(element);
+        }
+        Job.findOneAndRemove({_id: id}, function (err, document) {
+          setTimeout(function() {
+            if (typeof(callback) == 'function') {
+              callback();
+            }
+          }, 500);
         });
+      } else {
+        //TODO: Find something to do here as well
       }
     });
   }

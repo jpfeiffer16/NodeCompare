@@ -10,34 +10,8 @@ router.post('/newjob', function(req, res, next) {
   var JobDataStorage = require('../modules/JobDataStorage');
   
   var jobToAdd = req.body;
-  
-  
-  //TODO: update this architecture
-  // JobDataStorage.processJob(jobToAdd.sourceUrl, jobToAdd.targetUrl,jobToAdd.name, jobToAdd.description);
-  
-  
   JobDataStorage.processJob(jobToAdd, function() {
     console.log('Job finished processing');
   });
-  
-  
-  
-  
   res.send({});
-  
-  // res.status(500).send('Under development');
-  
-  
-  
-  // E.G.: 
-  // {
-  //   name: '',
-  //   description: '',
-  //   urls: [
-  //     {
-  //       targetUrl: '',
-  //       sourceUrl: ''
-  //     }
-  //   ]
-  // }
 });

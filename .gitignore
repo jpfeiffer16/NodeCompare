@@ -1,3 +1,4 @@
 node_modules/
+temp/
 public/components
 .sass-cache

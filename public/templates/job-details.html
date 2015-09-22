@@ -8,7 +8,6 @@
   <p>
     <strong>Name: </strong><span>{{job.name}}</span>
   </p>
-  
   <table class="table">
     <thead>
       <tr>
@@ -20,24 +19,17 @@
     <tbody>
       <tr ng-repeat="compare in job.compares">
         <td>
-          <img id="sourceImage" class="preview-image" src="imageprovider/{{compare.sourceImageId}}" alt="">
+          <img id="sourceImage" class="preview-image" src="imageprovider/{{compare.sourceId}}" alt="">
         </td>
         <td>
-          <img id="targetImage" class="preview-image" src="imageprovider/{{compare.targetImageId}}" alt="">
+          <img id="targetImage" class="preview-image" src="imageprovider/{{compare.targetId}}" alt="">
         </td>
         <td>
-          <img id="targetImage" class="preview-image" src="" compare source-image-id="{{compare.sourceImageId}}" target-image-id="{{compare.targetImageId}}" alt="">
+          <img id="targetImage" class="preview-image" src="compareimageprovider/{{compare.compareId}}" alt="">
+          <!--<img id="targetImage" class="preview-image" src="" compare source-image-id="{{compare.sourceId}}" target-image-id="{{compare.targetId}}" alt="">-->
         </td>
       </tr>
     </tbody>
   </table>
-  
-  
-  
-  
-  
-  
-  
-  <!--<img class="preview-image" src="" resemble-compare source-image="{{job.sourceImageId}}" target-image="{{job.targetImageId}}" alt="">-->
 </div>
 <script src="js/resemble.js"></script>
