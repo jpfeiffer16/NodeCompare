@@ -22,26 +22,40 @@ module.exports = (function () {
         
         resemble('./temp/' + sourceImageId + '.png').compareTo('./temp/' + targetImageId + '.png').onComplete(function(data) {
         // resemble(sourceImageData).compareTo(targetImageData).onComplete(function(data) {
-          var dataBuffer = data.getDiffImage().data;
-          // var markerIndex = dataUrl.indexOf(';base64,');
-          var base64 = dataBuffer.toString('base64');
-          // var data = dataUrl.slice(markerIndex + 8, dataUrl.length - 1);
-          
           var fs = require('fs');
           
-          fs.write('./temp/test.png', dataBuffer, 0, dataBuffer.length, function () {
-            console.log('Done');
+          
+          var png = data.getDiffImage();
+          var pngBuffer = new Buffer([]);
+          var pngStream = png.pack();
+          
+          pngStream.on('data', function(data) {
+            pngBuffer = Buffer.concat([pngBuffer, data]);
+          });
+          
+          pngStream.on('end', function () {
+            fs.writeFile('./temp/test.png', pngBuffer, null, function () {
+              console.log('Done');
+            });
           });
           
           
+          // data.getDiffImage().pack().pipe(fs.createWriteStream('./temp/test.png'));
           
           
           
           
-          if (typeof(callback) == 'function') {
-            callback(base64);
-          };
           
+          
+          
+          
+          
+          
+          
+          // if (typeof(callback) == 'function') {
+          //   callback(base64);
+          // };
+          // 
           
           
         });
