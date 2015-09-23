@@ -24,23 +24,23 @@ module.exports = (function () {
         // resemble(sourceImageData).compareTo(targetImageData).onComplete(function(data) {
           var fs = require('fs');
           
+          // 
+          // var png = data.getDiffImage();
+          // var pngBuffer = new Buffer([]);
+          // var pngStream = png.pack();
+          // 
+          // pngStream.on('data', function(data) {
+          //   pngBuffer = Buffer.concat([pngBuffer, data]);
+          // });
+          // 
+          // pngStream.on('end', function () {
+          //   fs.writeFile('./temp/test.png', pngBuffer, null, function () {
+          //     console.log('Done');
+          //   });
+          // });
           
-          var png = data.getDiffImage();
-          var pngBuffer = new Buffer([]);
-          var pngStream = png.pack();
           
-          pngStream.on('data', function(data) {
-            pngBuffer = Buffer.concat([pngBuffer, data]);
-          });
-          
-          pngStream.on('end', function () {
-            fs.writeFile('./temp/test.png', pngBuffer, null, function () {
-              console.log('Done');
-            });
-          });
-          
-          
-          // data.getDiffImage().pack().pipe(fs.createWriteStream('./temp/test.png'));
+          data.getDiffImage().pack().pipe(fs.createWriteStream('./temp/test.png', 'binary'));
           
           
           
