@@ -1,7 +1,4 @@
 module.exports = {
-  
-  
-  
   isResolved: false,
   
   fulfilledHandlers: [],

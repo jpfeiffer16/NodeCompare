@@ -20,18 +20,58 @@ module.exports = (function () {
         var sourceImage = new Buffer(sourceImageData, 'base64');
         var targetImage = new Buffer(targetImageData, 'base64');
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         resemble('./temp/' + sourceImageId + '.png').compareTo('./temp/' + targetImageId + '.png').onComplete(function(data) {
-        // resemble(sourceImageData).compareTo(targetImageData).onComplete(function(data) {
+        // resemble(sourceImage).compareTo(targetImage).onComplete(function(data) {
           var fs = require('fs');
           
-          // 
-          // var png = data.getDiffImage();
-          // var pngBuffer = new Buffer([]);
-          // var pngStream = png.pack();
-          // 
-          // pngStream.on('data', function(data) {
-          //   pngBuffer = Buffer.concat([pngBuffer, data]);
-          // });
+          
+          var png = data.getDiffImage();
+          var pngBuffer = new Buffer([]);
+          var pngStream = png.pack();
+          
+          var writeStream = fs.createWriteStream('./temp/test.png', {
+            flags: 'w',
+            encoding: 'binary',
+            fd: null,
+            // mode: 0o66,
+            start: 0,
+            offset: 0
+          });
+          
+          
+          
+          
+          
+          
+          pngStream.on('data', function(data) {
+            // pngBuffer = Buffer.concat([pngBuffer, data]);
+            
+            writeStream.write(data);
+            
+            
+          });
+          
+          
+          pngStream.on('end', function(data) {
+            writeStream.close();
+            // pngStream.close();
+          });
+          
+          
           // 
           // pngStream.on('end', function () {
           //   fs.writeFile('./temp/test.png', pngBuffer, null, function () {
@@ -39,8 +79,10 @@ module.exports = (function () {
           //   });
           // });
           
-          
-          data.getDiffImage().pack().pipe(fs.createWriteStream('./temp/test.png', 'binary'));
+          // 
+          // console.log('Attempting to save compare data');
+          // 
+          // data.getDiffImage().pack().pipe(fs.createWriteStream('./temp/test.png', 'binary'));
           
           
           

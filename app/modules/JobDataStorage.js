@@ -1,55 +1,72 @@
 /// <reference path="../../typings/tsd.d.ts" />
+
+var maxCompares = 3;
+
+
+
 module.exports = (function() {
   var processJob = function (job, callback) {
     process.nextTick(function() {
       saveJobData(job, function(jobWithIds) {
         var ImageGetter = require('./ImageGetter.js'),
             PageInfoGetter = require('./PageInfoGetter.js'),
+            CompareMonitor = require('./CompareMonitor.js'),
             compareList = jobWithIds.compares;
-        for (var i = 0; i < compareList.length; i++) {
-          var element = compareList[i];
-          (function(element) {
-            var sourceImagePromise = require('./PromiseEngine.js');
-            var targetImagePromise = require('./PromiseEngine.js');
-            var sourcePromise = PageInfoGetter.getInfo(element.sourceUrl, element.sourceId);
-            sourcePromise.then(function(info) {
-              // var sourceImageData = info.imageData;
-              sourceImagePromise = saveImageData(info.imageData, element.sourceId);
-              saveSourceData(info.sourceData, element.sourceId);
-              
-              
-              
+            
+            var comparer = new CompareMonitor(3, compareList);
+            
+            comparer.monitorCompares().done(function () {
+              console.log('Yay! We made it.');
             });
             
-            var targetPromise = PageInfoGetter.getInfo(element.targetUrl, element.targetId);
-            targetPromise.then(function(info) {
-              targetImagePromise = saveImageData(info.imageData, element.targetId);
-              saveSourceData(info.sourceData, element.targetId);
+            
+//         for (var i = 0; i < compareList.length; i++) {
+//           var element = compareList[i];
+//           (function(element) {
+//             var sourceImagePromise = require('./PromiseEngine.js');
+//             var targetImagePromise = require('./PromiseEngine.js');
+//             var sourcePromise = PageInfoGetter.getInfo(element.sourceUrl, element.sourceId);
+//             sourcePromise.then(function(info) {
+//               // var sourceImageData = info.imageData;
+//               sourceImagePromise = saveImageData(info.imageData, element.sourceId);
+//               saveSourceData(info.sourceData, element.sourceId);
+//               
+//               
+//               
+//             });
+//             
+//             var targetPromise = PageInfoGetter.getInfo(element.targetUrl, element.targetId);
+//             targetPromise.then(function(info) {
+//               targetImagePromise = saveImageData(info.imageData, element.targetId);
+//               saveSourceData(info.sourceData, element.targetId);
+// 
+//               // var ImageComparer = require('ImageComparer.js');
+//               // 
+//               // 
+//               // ImageComparer.compareImages(element.sourceId, element.targetId, function(base64) {
+//               // });
+//             });
+//           
+//             // sourcePromise.when(sourcePromise, targetPromise).then(function () {
+//             //   console.log('when being called');
+//             // });
+//             
+//             sourceImagePromise.when(sourceImagePromise, targetImagePromise).then(function() {
+//               var ImageComparer = require('./ImageComparer.js');
+//               
+//               ImageComparer.compareImages(element.sourceId, element.targetId, function(data) {
+//                 saveImageCompareData(data, element.compareId).then(function() {
+//                   console.log('Image Compare Saved');
+//                 });
+//               });
+//             });
+//             
+//             
+//           })(element);
+//         }
 
-              // var ImageComparer = require('ImageComparer.js');
-              // 
-              // 
-              // ImageComparer.compareImages(element.sourceId, element.targetId, function(base64) {
-              // });
-            });
-          
-            // sourcePromise.when(sourcePromise, targetPromise).then(function () {
-            //   console.log('when being called');
-            // });
-            
-            sourceImagePromise.when(sourceImagePromise, targetImagePromise).then(function() {
-              var ImageComparer = require('./ImageComparer.js');
-              
-              ImageComparer.compareImages(element.sourceId, element.targetId, function(data) {
-                saveImageCompareData(data, element.compareId).then(function() {
-                  console.log('Image Compare Saved');
-                });
-              });
-            });
-            
-            
-          })(element);
-        }
+
+
        
         if (typeof(callback) == 'function') {
           callback();
@@ -188,6 +205,8 @@ module.exports = (function() {
   }
   return {
     processJob: processJob,
-    removeJob: removeJob
+    removeJob: removeJob,
+    saveImageData: saveImageData,
+    saveSourceData: saveSourceData
   };
 })();

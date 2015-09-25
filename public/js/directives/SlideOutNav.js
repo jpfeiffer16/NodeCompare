@@ -10,6 +10,17 @@ angular.module('app')
       
       // cover.show();
       cover.fadeIn();
+      
+      
+      cover.on('click', function(e) {
+        hideNav();
+        cover.off('click');
+      });
+      slideOutNav.find('a').on('click', function(e) {
+        hideNav();
+        slideOutNav.find('a').off('click');
+      });
+      
     }
     
     
@@ -25,6 +36,11 @@ angular.module('app')
     
     return {
       link: function(scope, element, attrs) {
+        $(document).keydown(function (e) {
+          if (e.keyCode == 113) {
+            showNav();
+          }
+        });
         element.on('click', function(e) {
           var slideOutNav = $('.slide-out-nav');
           var cover = $('#cover');
@@ -33,14 +49,7 @@ angular.module('app')
           e.stopPropagation();
           
           
-          cover.on('click', function(e) {
-            hideNav();
-            cover.off('click');
-          });
-          slideOutNav.find('a').on('click', function(e) {
-            hideNav();
-            slideOutNav.find('a').off('click');
-          });
+          
         });
       }
     }
