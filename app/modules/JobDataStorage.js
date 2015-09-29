@@ -172,6 +172,8 @@ module.exports = (function() {
       if (typeof(callback) == 'function') {
         callback();
       }
+    } else {
+      callback({err: 'Directory does not exist'});
     }
   };
   

@@ -42,9 +42,12 @@ module.exports = function (maxCompares, compareList) {
         if (compareList.length == 0 && numberOfRunningCompares == 0) {
           if (self.onFinished != null) {
             setTimeout(function () {
-              //TODO: Delete all images sitting in the temp directory here
-              JobDataStorage.removeTempImages(function() {
-                console.log('Temp files deleted');
+              JobDataStorage.removeTempImages(function(err) {
+                if (!err) {
+                  console.log('Temp files deleted');
+                } else {
+                  console.log('Unable to delete temp files');
+                }
               });
             }, 6000);
             self.onFinished();
