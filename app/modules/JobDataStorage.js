@@ -2,8 +2,6 @@
 
 var maxCompares = 3;
 
-
-
 module.exports = (function() {
   var processJob = function (job, callback) {
     process.nextTick(function() {
@@ -154,14 +152,27 @@ module.exports = (function() {
   var removeTempImages = function (callback) {
     var path = require('path');
     var appDir = path.dirname(require.main.filename);
-    var tempDir = appDir + '\\temp',
+    var tempDir = appDir + '/temp',
         fs = require('fs');
     console.log(tempDir);
-    fs.rmdir(tempDir, function() {
+    // fs.rmdir(tempDir, function() {
+    //   if (typeof(callback) == 'function') {
+    //     callback();
+    //   }
+    // });
+    
+    if( fs.existsSync(tempDir) ) {
+      var files = fs.readdirSync(tempDir);
+      files.forEach(function(file,index){
+        var curPath = tempDir + "/" + file;
+        console.log(curPath);
+        fs.unlinkSync(curPath);
+      });
+      fs.rmdirSync(tempDir);
       if (typeof(callback) == 'function') {
         callback();
       }
-    });
+    }
   };
   
   return {
