@@ -12,7 +12,7 @@ module.exports = (function() {
             compareList = jobWithIds.compares;
             
         //Here we run the compares
-        var comparer = new CompareMonitor(1, compareList);
+        var comparer = new CompareMonitor(3, compareList);
         comparer.monitorCompares().done(function () {
           console.log('Yay! We made it.');
           if (typeof(callback) == 'function') {
@@ -62,50 +62,53 @@ module.exports = (function() {
 
   var saveImageData = function (data, id) {
     var Promise = require('./PromiseEngine.js');
+    var promise = new Promise();
     var Image = require('../models/image.js');
     var image = new Image({ _id: id, data: data.toString() });
 
     image.save(function (err) {
       if (!err) {
         console.log('Image Saved');
-        Promise.resolve(true);
+        promise.resolve(true);
       } else {
         throw err;
       }
     });
-    return Promise;
+    return promise;
   };
 
   var saveSourceData = function(source, id) {
     var Promise = require('./PromiseEngine.js');
+    var promise = new Promise();
     var Source = require('../models/source.js');
     var source = new Source({ _id: id, data: source.toString() });
 
     source.save(function (err) {
       if (!err) {
         console.log('Source Saved');
-        Promise.resolve(true);
+        promise.resolve(true);
       } else {
         throw err;
       }
     });
-    return Promise;
+    return promise;
   }
 
   var saveImageCompareData = function(data, id) {
     var Promise = require('./PromiseEngine.js');
+    var promise = new Promise();
     var ImageCompare = require('../models/imagecompare.js');
     var compareImage = new ImageCompare({ _id: id, data: data.toString() });
 
     compareImage.save(function (err) {
       if (!err) {
         console.log('Compare Image Saved');
-        Promise.resolve(true);
+        promise.resolve(true);
       } else {
         throw err;
       }
     });
-    return Promise;
+    return promise;
   }
 
   var removeJob = function(id, callback) {
@@ -154,12 +157,10 @@ module.exports = (function() {
     var appDir = path.dirname(require.main.filename);
     var tempDir = appDir + '/temp',
         fs = require('fs');
-    console.log(tempDir);
     if( fs.existsSync(tempDir) ) {
       var files = fs.readdirSync(tempDir);
       files.forEach(function(file,index){
         var curPath = tempDir + "/" + file;
-        console.log(curPath);
         fs.unlinkSync(curPath);
       });
       fs.rmdirSync(tempDir);

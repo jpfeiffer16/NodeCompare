@@ -1,6 +1,8 @@
 /// <reference path="../../typings/tsd.d.ts" />
 module.exports = function() {
   var getInfo = function(url, id) {
+    
+    console.log('getInfo being called.');
     // function resolvePromise(fulfilled, data) {
     //   if (fulfilled) {
     //     //Loop through the handlers and call each
@@ -51,6 +53,7 @@ module.exports = function() {
     var fs = require('fs');
     var phantom = require('phantom');
     var Promise = require('./PromiseEngine.js');
+    var promise = new Promise();
     var fileName = id;
     console.log(fileName);
 
@@ -65,7 +68,7 @@ module.exports = function() {
                 var base64 = data.toString('base64');
                 page.getContent(function(source) {
                   ph.exit();
-                  Promise.resolve(true, {
+                  promise.resolve(true, {
                     imageData: base64,
                     sourceData: source
                   });
@@ -83,7 +86,7 @@ module.exports = function() {
           weak: false
         }
     });
-    return Promise;
+    return promise;
   };
   
   return {
