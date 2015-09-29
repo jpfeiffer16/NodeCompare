@@ -63,8 +63,7 @@ module.exports = function (maxCompares, compareList) {
           self.onFinished = callback;
         }
       }
-    }
-    
+    } 
   }
   return {
     monitorCompares: monitorCompares

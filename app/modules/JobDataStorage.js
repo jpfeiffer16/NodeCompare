@@ -155,12 +155,6 @@ module.exports = (function() {
     var tempDir = appDir + '/temp',
         fs = require('fs');
     console.log(tempDir);
-    // fs.rmdir(tempDir, function() {
-    //   if (typeof(callback) == 'function') {
-    //     callback();
-    //   }
-    // });
-    
     if( fs.existsSync(tempDir) ) {
       var files = fs.readdirSync(tempDir);
       files.forEach(function(file,index){
@@ -176,7 +170,6 @@ module.exports = (function() {
       callback({err: 'Directory does not exist'});
     }
   };
-  
   return {
     processJob: processJob,
     removeJob: removeJob,

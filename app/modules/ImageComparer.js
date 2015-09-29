@@ -5,10 +5,6 @@ module.exports = (function () {
     
     return new Blob([raw], {type: 'png'});
   };
-  
-  
-  
-  
   var compareImages = function(sourceImageId, targetImageId, callback) {
     var resemble = require('node-resemble-js');
     var ImageGetter = require('./ImageGetter.js');
@@ -19,26 +15,9 @@ module.exports = (function () {
         var targetImageData = 'data:image/png;base64,' + data;
         var sourceImage = new Buffer(sourceImageData, 'base64');
         var targetImage = new Buffer(targetImageData, 'base64');
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         resemble('./temp/' + sourceImageId + '.png').compareTo('./temp/' + targetImageId + '.png').onComplete(function(data) {
         // resemble(sourceImage).compareTo(targetImage).onComplete(function(data) {
           var fs = require('fs');
-          
-          
           var png = data.getDiffImage();
           var pngBuffer = new Buffer([]);
           var pngStream = png.pack();
@@ -51,28 +30,15 @@ module.exports = (function () {
             start: 0,
             offset: 0
           });
-          
-          
-          
-          
-          
-          
           pngStream.on('data', function(data) {
             // pngBuffer = Buffer.concat([pngBuffer, data]);
             
             writeStream.write(data);
-            
-            
           });
-          
-          
           pngStream.on('end', function(data) {
             writeStream.close();
             // pngStream.close();
           });
-          
-          
-          // 
           // pngStream.on('end', function () {
           //   fs.writeFile('./temp/test.png', pngBuffer, null, function () {
           //     console.log('Done');
@@ -83,33 +49,14 @@ module.exports = (function () {
           // console.log('Attempting to save compare data');
           // 
           // data.getDiffImage().pack().pipe(fs.createWriteStream('./temp/test.png', 'binary'));
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
           // if (typeof(callback) == 'function') {
           //   callback(base64);
           // };
-          // 
-          
-          
         });
-        
-        
       });
     });
     
   };
-  
-  
-  
   return {
     compareImages: compareImages
   };
