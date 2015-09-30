@@ -157,7 +157,7 @@ module.exports = (function() {
     var appDir = path.dirname(require.main.filename);
     var tempDir = appDir + '/temp',
         fs = require('fs');
-    if( fs.existsSync(tempDir) ) {
+    if (fs.existsSync(tempDir)) {
       var files = fs.readdirSync(tempDir);
       files.forEach(function(file,index){
         var curPath = tempDir + "/" + file;
