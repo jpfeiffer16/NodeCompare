@@ -49,7 +49,7 @@ module.exports = function (maxCompares, compareList) {
                   console.log('Unable to delete temp files');
                 }
               });
-            }, 6000);
+            }, 7000);
             self.onFinished();
           }
         } else {
