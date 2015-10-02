@@ -10,6 +10,10 @@ angular.module('app', ['ngRoute'])
         templateUrl: '/templates/new-job.html'
         // controller: 'NewJobCtrl'
       })
+      .when('/about', {
+        templateUrl: '/templates/about.html'
+        // controller: 'JobDetailsCtrl'
+      })
       .when('/details/:id', {
         templateUrl: '/templates/job-details.html'
         // controller: 'JobDetailsCtrl'

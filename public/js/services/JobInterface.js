@@ -39,10 +39,24 @@ angular.module('app')
           }
         });
       }
+      var monitorJobs = function(intervarl, callback) {
+        var self = this;
+        if (typeof(callback) == 'function') {
+          self.callback = callback;
+        }
+        setInterval(function() {
+          getJobs(function(jobs) {
+            if (self.callback) {
+              self.callback(jobs);
+            }
+          });
+        }, intervarl);
+      }
       return {
         saveJob: saveJob,
         getJobs: getJobs,
         getJob: getJob,
+        monitorJobs: monitorJobs,
         deleteJob: deleteJob,
         getImageData: getImageData
       };
