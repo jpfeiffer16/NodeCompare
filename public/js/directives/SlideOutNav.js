@@ -10,7 +10,7 @@ angular.module('app')
       
       // cover.show();
       cover.fadeIn();
-      
+      $('#filter-box').focus();
       
       cover.on('click', function(e) {
         hideNav();

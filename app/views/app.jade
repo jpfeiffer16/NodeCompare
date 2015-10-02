@@ -34,13 +34,19 @@ html(lang='en' ng-app="app")
       div(class="slide-out-nav")
         div(class="title")
           span NodeCompare
+        input(id="filter-box" type="text" ng-model="filterText" style="color:black;")
         ul
-          a(href="/")
-            li
-              span Job List
-          a(href="/new")
-            li
-              span New Job
+          li(ng-repeat="item in menuItems | filter: filterText")
+            a(href="{{item.location}}")
+              span {{item.name}}
+        
+        
+          // a(href="/")
+          //   li
+          //     span Job List
+          // a(href="/new")
+          //   li
+          //     span New Job
       div(id="cover" style="display:none;")
       div(class="ribbon top clearfix")
         div(class="left")
