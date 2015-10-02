@@ -4,6 +4,7 @@
       <tr>
         <td>Name</td>
         <td>Description</td>
+        <td>Compares</td>
         <td></td>
       </tr>
     </thead>
@@ -11,6 +12,7 @@
       <tr ng-repeat="job in jobs">
         <td><a href="/details/{{job._id}}">{{job.name}}</a></td>
         <td>{{job.description}}</td>
+        <td>{{job.compares.length}}</td>
         <td>
           <span ng-click="deleteJob(job._id)" spinner-morph="15">
             <span class="glyphicon glyphicon-remove hover-pointer"></span>

@@ -10,8 +10,6 @@ module.exports = function (app) {
 router.get('/imageprovider/:id', function(req, res, next) {
   var id = req.params.id;
   
-  console.log('id:', id);
-  
   Image.findOne({ _id: id }, function(err, result) {
     if (!err && result != null) {
       var image = new Buffer(result.data, 'base64');

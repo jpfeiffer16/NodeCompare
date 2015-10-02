@@ -1,5 +1,5 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
-angular.module('app', ['ngRoute'])
+angular.module('app', ['ngRoute', 'ngAnimate'])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
@@ -12,6 +12,10 @@ angular.module('app', ['ngRoute'])
       })
       .when('/about', {
         templateUrl: '/templates/about.html'
+        // controller: 'JobDetailsCtrl'
+      })
+      .when('/settings', {
+        templateUrl: '/templates/settings.html'
         // controller: 'JobDetailsCtrl'
       })
       .when('/details/:id', {

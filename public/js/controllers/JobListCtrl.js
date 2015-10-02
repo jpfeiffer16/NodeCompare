@@ -6,13 +6,13 @@ angular.module('app')
         $scope.jobs = jobs;
       });
     };
-    // $scope.deleteJob = function(id) {
-    //   JobInterface.deleteJob(id, function() {
-    //     refreshJobs();
-    //   });
-    // };
-    JobInterface.monitorJobs(8000, function(jobs) {
-      $scope.jobs = jobs;
-    });
+    $scope.deleteJob = function(id) {
+      JobInterface.deleteJob(id, function() {
+        refreshJobs();
+      });
+    };
+    // JobInterface.monitorJobs(8000, function(jobs) {
+    //   $scope.jobs = jobs;
+    // });
     refreshJobs();
   });

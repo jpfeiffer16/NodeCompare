@@ -9,7 +9,7 @@ module.exports = function() {
       var buffer = new Buffer(base64, 'base64');
       if (!err) {
         if (typeof(callback) == 'function') {
-          callback(buffer.toString());
+          callback(buffer);
         }
       } else {
         throw err;

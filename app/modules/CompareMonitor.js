@@ -10,6 +10,7 @@ module.exports = function (maxCompares, compareList) {
     process.nextTick(function () {
       var PageInfoGetter = require('./PageInfoGetter.js');
       var JobDataStorage = require('./JobDataStorage.js');
+      var Promise = require('./PromiseEngine.js');
       
       if (maxCompares > compareList.lenth) {
         maxCompares = compareList.length;
@@ -18,19 +19,25 @@ module.exports = function (maxCompares, compareList) {
         while (numberOfRunningCompares <= maxCompares) {
           if (compareList.length != 0 ) {
             (function (thisCompare) {
+              var sourceImageSavePromise = new Promise;
+              var targetImageSavePromise = new Promise;
               var sourcePromise = PageInfoGetter.getInfo(thisCompare.sourceUrl, thisCompare.sourceId);
               sourcePromise.then(function(info) {
-                JobDataStorage.saveImageData(info.imageData, thisCompare.sourceId);
+                sourceImageSavePromise = JobDataStorage.saveImageData(info.imageData, thisCompare.sourceId);
                 JobDataStorage.saveSourceData(info.sourceData, thisCompare.sourceId);
               });
               var targetPromise = PageInfoGetter.getInfo(thisCompare.targetUrl, thisCompare.targetId);
               targetPromise.then(function(info) {
-                JobDataStorage.saveImageData(info.imageData, thisCompare.targetId);
+                targetImageSavePromise = JobDataStorage.saveImageData(info.imageData, thisCompare.targetId);
                 JobDataStorage.saveSourceData(info.sourceData, thisCompare.targetId);
               });
               sourcePromise.when(sourcePromise, targetPromise).then(function() {
-                //TODO: Eventualy need to add server side resemble control logic here.
                 numberOfRunningCompares--;
+              });
+              
+              sourceImageSavePromise.when(sourceImageSavePromise, targetImageSavePromise).then(function() {
+                //TODO: Eventualy need to add server side resemble control logic here.
+                console.log('Both images saved');
               });
               numberOfRunningCompares++;
             })(compareList.pop());

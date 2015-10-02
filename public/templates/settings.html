@@ -1,0 +1,19 @@
+<div class="content" ng-controller="SettingsCtrl">
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="(key, value) in settings">
+          <td>{{key}}</td>
+          <td><input ng-model="value" type="text" class="form-control" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary" ng-click="saveSettings()">Save</button>
+  </div>
+</div>

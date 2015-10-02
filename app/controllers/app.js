@@ -26,3 +26,11 @@ router.get('/details/:id', function(req, res, next) {
 router.get('/new', function(req, res, next) {
   renderApp(res);
 });
+
+router.get('/about', function(req, res, next) {
+  renderApp(res);
+});
+
+router.get('/settings', function(req, res, next) {
+  renderApp(res);
+});
