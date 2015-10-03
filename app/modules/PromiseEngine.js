@@ -48,5 +48,4 @@ var Promise = function () {
     return thisReturnObj;
   }
 }
-// module.exports = new Promise();
 module.exports = Promise;

@@ -31,11 +31,12 @@ angular.module('app')
     function hideNav() {
       var slideOutNav = $('.slide-out-nav');
       var cover = $('#cover');
+      var filterBox = $('#filter-box');
       // cover.hide();
       cover.fadeOut();
       slideOutNav.removeClass('active');
-      $('#filter-box').blur();
-      $('#filter-box').off('keypress');
+      
+      filterBox.blur().off('keypress');
     }
     
     return {

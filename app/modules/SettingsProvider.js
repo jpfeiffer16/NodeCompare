@@ -2,7 +2,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
   Settings = require('../../config/nodeCompareSettings.js'),
-  DefaultSettings = require('../../config/nodeCompareDefaultSettings.js');
+  DefaultSettings = require('../../config/nodeCompareDefaultSettings.js'),
   OS = require('os');
   
 
@@ -39,10 +39,24 @@ module.exports = (function() {
     });
   };
   
-  var saveSettings = function(settings, callback) {
-    settings.save(function(err) {
-      if (typeof(callback) == 'function') {
-        callback(err);
+  var saveSettings = function(settingsToSave, callback) {
+    settings.findOne({machineName: machineName}, function(err, result) {
+      if(!err && result != null) {
+        result.update({settings: settingsToSave}, function() {
+          if (typeof(callback) == 'function') {
+            callback();
+          }
+        });
+      } else {
+        var newSettings = new settings({
+          machineName: machineName,
+          settings: settingsToSave
+        });
+        newSettings.save(function() {
+          if (typeof(callback) == 'function') {
+            callback();
+          }
+        });
       }
     });
   };

@@ -11,5 +11,8 @@ router.post('/savesettings', function(req, res, next) {
   console.log(settingsToSave);
   // console.log(t);
   //Find document based on machine name and updtate the settings property with the data, created it if it does not exist
+  SettingsProvider.saveSettings(settingsToSave, function() {
+    console.log('Settings saved');
+  });
   res.send({});
 });
