@@ -2,6 +2,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
   Settings = require('../../config/nodeCompareSettings.js'),
+  DefaultSettings = require('../../config/nodeCompareDefaultSettings.js');
   OS = require('os');
   
 
@@ -25,12 +26,14 @@ module.exports = (function() {
           callback(err, result.settings);
         } else {
           //Generate a default
-          var defaultSettings = {};
-          for (var prop in Settings.settings) {
-            defaultSettings[prop] = null;
-          }
+          // var defaultSettings = [];
+          // for (var i = 0; i< Settings.settings.length; i++) {
+          //   var defaultSetting = Settings.settings[i];
+          //   defaultSetting.value = null;
+          //   defaultSettings.push(defaultSetting);
+          // }
 
-          callback(null, defaultSettings);
+          callback(null, DefaultSettings);
         }
       }
     });

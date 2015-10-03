@@ -6,8 +6,12 @@ module.exports = {
   // _id: mongoose.Types.ObjectId,
   machineName: String,
   //Machine settings:
-  settings: {
-    maxConcurrentCompares: Number,
-    userAgent: String,
-  }
+  settings: [
+    {
+      name: String,
+      value: mongoose.Schema.Types.Mixed
+    }
+    // maxConcurrentCompares: Number,
+    // userAgent: String,
+  ]
 }

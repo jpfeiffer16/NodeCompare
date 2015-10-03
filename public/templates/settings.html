@@ -8,9 +8,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="(key, value) in settings">
-          <td>{{key}}</td>
-          <td><input ng-model="value" type="text" class="form-control" /></td>
+        <tr ng-repeat="setting in settings">
+          <td>{{setting.name}}</td>
+          <td><input ng-model="setting.value" type="text" class="form-control" /></td>
         </tr>
       </tbody>
     </table>
