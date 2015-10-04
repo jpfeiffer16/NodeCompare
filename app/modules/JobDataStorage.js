@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-var maxCompares = 3;
+// var maxCompares = 3;
 
 module.exports = (function() {
   var processJob = function (job, callback) {
@@ -8,16 +8,19 @@ module.exports = (function() {
       saveJobData(job, function(jobWithIds) {
         var ImageGetter = require('./ImageGetter.js'),
             PageInfoGetter = require('./PageInfoGetter.js'),
+            SettingsProvider = require('./SettingsProvider.js'),
             CompareMonitor = require('./CompareMonitor.js'),
             compareList = jobWithIds.compares;
-            
         //Here we run the compares
-        var comparer = new CompareMonitor(3, compareList);
-        comparer.monitorCompares().done(function () {
-          console.log('Yay! We made it.');
-          if (typeof(callback) == 'function') {
-            callback();
-          }
+        SettingsProvider.getSetting('maxConcurrentCompares', function(maxConcurrentCompares) {
+          console.log('newing up monitor');
+          var comparer = new CompareMonitor(maxConcurrentCompares, compareList);
+          comparer.monitorCompares().done(function () {
+            console.log('Yay! We made it.');
+            if (typeof(callback) == 'function') {
+              callback();
+            }
+          });
         });
       });
     });

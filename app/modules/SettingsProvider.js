@@ -15,9 +15,9 @@ var machineName = OS.hostname();
 module.exports = (function() {
   //Use constructor pattern
   
-  var getSetting = function () {
-    throw "Not Implemented";
-  };
+  // var getSetting = function () {
+  //   throw "Not Implemented";
+  // };
   
   var getSettings = function(callback) {
     settings.findOne({machineName: machineName}, function(err, result) {
@@ -61,11 +61,25 @@ module.exports = (function() {
     });
   };
   
-  
-  //Build the rest of this out here
-  
+  var getSetting = function(settingName, callback) {
+    getSettings(function (err, settings) {
+      if (!err) {
+        var settingValue = null;
+        for (var i = 0; i < settings.length; i++) {
+          if (settings[i].name == settingName) {
+            settingValue = settings[i].value;
+            break;
+          }
+        }
+        if (typeof(callback) == 'function') {
+          callback(settingValue);
+        }
+      }
+    });
+  }
   return {
     getSettings: getSettings,
+    getSetting: getSetting,
     saveSettings: saveSettings
   }
   

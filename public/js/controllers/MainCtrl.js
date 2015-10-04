@@ -2,9 +2,9 @@
 angular.module('app')
   .controller('MainCtrl', function($location, $scope) {
     $scope.menuItems = [
-      {name: 'Home', location: '/'},
-      {name: 'New', location: '/new'},
-      {name: 'Settings', location: '/settings'},
-      {name: 'About', location: '/about'}      
+      {name: 'Home', location: '/', icon: 'glyphicon glyphicon-home'},
+      {name: 'New', location: '/new', icon: 'glyphicon glyphicon-plus'},
+      {name: 'Settings', location: '/settings', icon: 'glyphicon glyphicon-cog'},
+      {name: 'About', location: '/about', icon: 'glyphicon glyphicon-comment'}
     ];
   });
