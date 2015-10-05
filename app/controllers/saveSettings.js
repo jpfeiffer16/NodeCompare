@@ -14,5 +14,8 @@ router.post('/savesettings', function(req, res, next) {
   SettingsProvider.saveSettings(settingsToSave, function() {
     console.log('Settings saved');
   });
-  res.send({});
+  res.send({
+    status: 'Ok',
+    message: 'Settings have been saved successfully.'
+  });
 });

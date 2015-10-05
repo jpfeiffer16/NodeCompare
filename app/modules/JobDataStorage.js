@@ -178,6 +178,7 @@ module.exports = (function() {
     processJob: processJob,
     removeJob: removeJob,
     saveImageData: saveImageData,
+    saveImageCompareData: saveImageCompareData,
     saveSourceData: saveSourceData,
     removeTempImages: removeTempImages
   };

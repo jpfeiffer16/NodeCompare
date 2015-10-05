@@ -7,7 +7,7 @@ angular.module('app')
     
     $scope.saveSettings = function() {
       $http.post('/savesettings', $scope.settings).then(function(result) {
-        console.log(result);
+        $scope.message = result.data.message;
       });
     };
   });
