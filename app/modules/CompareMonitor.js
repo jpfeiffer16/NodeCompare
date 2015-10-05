@@ -35,8 +35,8 @@ module.exports = function (maxCompares, compareList) {
               });
               sourcePromise.when(sourcePromise, targetPromise).then(function() {
                 numberOfRunningCompares--;
+                numberOfClosures++;
                 sourceImageSavePromise.when(sourceImageSavePromise, targetImageSavePromise).then(function() {
-                  numberOfClosures++;
                   ImageComparer.compareImages(thisCompare.compareId, thisCompare.sourceId, thisCompare.targetId, function () {
                     numberOfClosures--;
                     console.log('Compare completed');
@@ -49,6 +49,7 @@ module.exports = function (maxCompares, compareList) {
             break;
           }
           console.log(numberOfRunningCompares);
+          console.log(numberOfClosures);
         }
         if (compareList.length == 0 && numberOfRunningCompares == 0 && numberOfClosures == 0) {
           if (self.onFinished != null) {
