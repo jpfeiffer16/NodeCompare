@@ -29,7 +29,7 @@ html(lang='en' ng-app="app")
       script(src="js/directives/ParseCsv.js")
       script(src="js/directives/Compare.js")
       script(src="js/directives/Version.js")
-      script(src="js/directives/Fader.js")      
+      script(src="js/directives/Fader.js")
         if ENV_DEVELOPMENT
           script(src='http://localhost:35729/livereload.js')
         
@@ -38,7 +38,7 @@ html(lang='en' ng-app="app")
       div(class="slide-out-nav")
         div(class="title")
           span NodeCompare
-        div(class="input-group")
+        div(id="nav-filter" class="input-group")
           span(class="input-group-addon")
             span(class="glyphicon glyphicon-search")
           input(id="filter-box" class="form-control" type="text" ng-model="filterText" placeholder="Filter.." style="color:black;")
