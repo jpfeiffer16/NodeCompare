@@ -1,17 +1,11 @@
 /// <reference path="../../typings/tsd.d.ts" />
-
-// var maxCompares = 3;
-
 module.exports = (function() {
   var processJob = function (job, callback) {
     process.nextTick(function() {
       saveJobData(job, function(jobWithIds) {
-        var ImageGetter = require('./ImageGetter.js'),
-            PageInfoGetter = require('./PageInfoGetter.js'),
-            SettingsProvider = require('./SettingsProvider.js'),
+        var SettingsProvider = require('./SettingsProvider.js'),
             CompareMonitor = require('./CompareMonitor.js'),
             compareList = jobWithIds.compares;
-        //Here we run the compares
         SettingsProvider.getSetting('maxConcurrentCompares', function(maxConcurrentCompares) {
           console.log('newing up monitor');
           var comparer = new CompareMonitor(maxConcurrentCompares, compareList);
@@ -27,10 +21,9 @@ module.exports = (function() {
   };
 
   var saveJobData = function (jobWithoutIds, callback) {
-    var mongoose = require('mongoose');
-    var Job = require('../models/job.js');
-    var jobId = new mongoose.Types.ObjectId();
-
+    var mongoose = require('mongoose'),
+        Job = require('../models/job.js'),
+        jobId = new mongoose.Types.ObjectId();
 
     var job = new Job({
       _id: jobId,
@@ -38,9 +31,6 @@ module.exports = (function() {
       description: jobWithoutIds.description,
       compares: []
     });
-
-
-    console.log(jobWithoutIds);
 
     for (var i = 0; i < jobWithoutIds.compares.length; i++) {
       jobWithoutIds.compares[i].sourceId = new mongoose.Types.ObjectId();
@@ -64,10 +54,10 @@ module.exports = (function() {
   };
 
   var saveImageData = function (data, id) {
-    var Promise = require('./PromiseEngine.js');
-    var promise = new Promise();
-    var Image = require('../models/image.js');
-    var image = new Image({ _id: id, data: data.toString() });
+    var Promise = require('./PromiseEngine.js'),
+        promise = new Promise(),
+        Image = require('../models/image.js'),
+        image = new Image({ _id: id, data: data.toString() });
 
     image.save(function (err) {
       if (!err) {
@@ -81,10 +71,10 @@ module.exports = (function() {
   };
 
   var saveSourceData = function(source, id) {
-    var Promise = require('./PromiseEngine.js');
-    var promise = new Promise();
-    var Source = require('../models/source.js');
-    var source = new Source({ _id: id, data: source.toString() });
+    var Promise = require('./PromiseEngine.js'),
+    promise = new Promise(),
+    Source = require('../models/source.js'),
+    source = new Source({ _id: id, data: source.toString() });
 
     source.save(function (err) {
       if (!err) {
@@ -98,14 +88,12 @@ module.exports = (function() {
   }
 
   var saveImageCompareData = function(data, id) {
-    var Promise = require('./PromiseEngine.js');
-    var promise = new Promise();
-    var ImageCompare = require('../models/imagecompare.js');
-    var compareImage = new ImageCompare({ _id: id, data: data.toString() });
-
+    var Promise = require('./PromiseEngine.js'),
+        promise = new Promise(),
+        ImageCompare = require('../models/imagecompare.js'),
+        compareImage = new ImageCompare({ _id: id, data: data.toString() });
     compareImage.save(function (err) {
       if (!err) {
-        console.log('Compare Image Saved');
         promise.resolve(true);
       } else {
         throw err;

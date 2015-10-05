@@ -2,17 +2,14 @@ module.exports = function (maxCompares, compareList) {
   var self = this;
   var numberOfRunningCompares = 0;
   var numberOfClosures = 0;
-  
-  this.maxCompares = maxCompares;
-  this.compareList = compareList;
   this.onFinished = null;
   
   function monitorCompares() {
     process.nextTick(function () {
-      var PageInfoGetter = require('./PageInfoGetter.js');
-      var JobDataStorage = require('./JobDataStorage.js');
-      var ImageComparer = require('./ImageComparer.js');
-      var Promise = require('./PromiseEngine.js');
+      var PageInfoGetter = require('./PageInfoGetter.js'),
+          JobDataStorage = require('./JobDataStorage.js'),
+          ImageComparer = require('./ImageComparer.js'),
+          Promise = require('./PromiseEngine.js');
       
       if (maxCompares > compareList.lenth) {
         maxCompares = compareList.length;
@@ -29,7 +26,7 @@ module.exports = function (maxCompares, compareList) {
                 JobDataStorage.saveSourceData(info.sourceData, thisCompare.sourceId);
               });
               var targetPromise = PageInfoGetter.getInfo(thisCompare.targetUrl, thisCompare.targetId);
-              targetPromise.then(function(info) {
+              targetPromise.then(function(info) { 
                 targetImageSavePromise = JobDataStorage.saveImageData(info.imageData, thisCompare.targetId);
                 JobDataStorage.saveSourceData(info.sourceData, thisCompare.targetId);
               });

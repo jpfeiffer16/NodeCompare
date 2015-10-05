@@ -2,11 +2,9 @@
 module.exports = function() {
   var getSavedImageAsBinary = function(id, callback) {
     var Image = require('../models/image.js');
-
     Image.findOne({_id: id}, function(err, result) {
-      var base64 = result.data;
-
-      var buffer = new Buffer(base64, 'base64');
+      var base64 = result.data,
+          buffer = new Buffer(base64, 'base64');
       if (!err) {
         if (typeof(callback) == 'function') {
           callback(buffer);
@@ -19,7 +17,6 @@ module.exports = function() {
 
   var getSavedImageAsBase64 = function(id, callback) {
     var Image = require('../models/image.js');
-
     Image.findOne({_id: id}, function(err, result) {
       if (!err && result != null) {
         var base64 = result.data;
@@ -27,7 +24,7 @@ module.exports = function() {
           callback(base64);
         }
       } else {
-        // throw err;
+        throw err;
       }
     });
   }

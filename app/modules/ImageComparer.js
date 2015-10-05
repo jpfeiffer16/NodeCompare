@@ -5,11 +5,7 @@ module.exports = (function () {
         ImageGetter = require('./ImageGetter.js');
     
     ImageGetter.getSavedImageAsBase64(sourceImageId, function (data) {
-      // var sourceImageData = data;
       ImageGetter.getSavedImageAsBase64(targetImageId, function(data) {
-        // var targetImageData = data;
-        // var sourceImage = new Buffer(sourceImageData, 'base64');
-        // var targetImage = new Buffer(targetImageData, 'base64');
         resemble('./temp/' + sourceImageId + '.png').compareTo('./temp/' + targetImageId + '.png').onComplete(function(data) {
           var png = data.getDiffImage();
           var pngBuffer = new Buffer([]);
