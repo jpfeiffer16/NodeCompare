@@ -10,6 +10,7 @@ module.exports = function (maxCompares, compareList) {
           JobDataStorage = require('./JobDataStorage.js'),
           ImageComparer = require('./ImageComparer.js'),
           Promise = require('./PromiseEngine.js');
+          // SourceComparer = require('./SourceComparer.js');
       
       if (maxCompares > compareList.lenth) {
         maxCompares = compareList.length;
@@ -38,6 +39,7 @@ module.exports = function (maxCompares, compareList) {
                     numberOfClosures--;
                     console.log('Compare completed');
                   });
+                  // SourceComparer.compareSources('This is a test', 'This is a super test');
                 });
               });
               numberOfRunningCompares++;

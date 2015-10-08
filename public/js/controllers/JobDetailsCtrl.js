@@ -10,16 +10,10 @@ angular.module('app')
       console.warn('Details require and Id dude! Get a clue....');
       $location.url('/');
     }
-    
-    
-    
+    $scope.setPreview = function(id) {
+      $scope.previewId = id;
+    };
     $scope.compare = function (sourceImageId, targetImageId, callback) {
-      // JobInterface.getImageData(function(sourceImageData) {
-      //   JobInterface.getImageData(function(targetImageId) {
-      //     
-      //   });
-      // });
-      // return ImageManipulator.compareSync(sourceImageId, targetImageId);
       ImageManipulator.compare(sourceImageId, targetImageId, function(data) {
         if (typeof(callback) == 'function') {
           callback(data);

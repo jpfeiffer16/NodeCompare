@@ -8,8 +8,27 @@ a {
 }
 
 .preview-image {
-  max-width: 300px;
-  display: inline;
+  width: 100%;
+}
+
+.preview-container {
+  position: fixed;
+  width: 500px;
+  right: 0px;
+  top: 35px;
+}
+
+.compare-info {
+  margin: 10px 0px;
+  background-color: #5F5D67;
+}
+
+.compare-info:hover {
+  transition-property: margin-left;
+  transition-duration: 400ms;
+  margin-left: 5px;
+  background-color: gray;
+  cursor: pointer;
 }
 
 .hover-pointer:hover {
