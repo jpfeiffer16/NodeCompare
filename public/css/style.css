@@ -169,6 +169,31 @@ body {
 }
 
 
+.tab-control {
+  display: inline;
+  border-radius: 5px 5px 0 0;
+  width: 50%;
+  padding: 6px;
+  background-color: darkgray;
+}
+
+.tab {
+  position: absolute;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 @keyframes slideIn {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }

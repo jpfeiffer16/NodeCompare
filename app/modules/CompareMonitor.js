@@ -39,6 +39,7 @@ module.exports = function (maxCompares, compareList) {
                     numberOfClosures--;
                     console.log('Compare completed');
                   });
+                  //Not sure we actually need to compare the sources on the server.
                   // SourceComparer.compareSources('This is a test', 'This is a super test');
                 });
               });

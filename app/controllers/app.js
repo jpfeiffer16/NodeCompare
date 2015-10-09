@@ -23,6 +23,10 @@ router.get('/details/:id', function(req, res, next) {
   renderApp(res);
 });
 
+router.get('/comparedetails/:id', function(req, res, next) {
+  renderApp(res);
+});
+
 router.get('/new', function(req, res, next) {
   renderApp(res);
 });
