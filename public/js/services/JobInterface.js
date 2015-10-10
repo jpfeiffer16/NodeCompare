@@ -38,7 +38,14 @@ angular.module('app')
             callback(response.data);
           }
         });
-      }
+      };
+      function getMisMatchPercentage(id, callback) {
+        $http.post('/getcomparemismatch/' + id).then(function(response) {
+          if (typeof(callback) == 'function') {
+            callback(response.data);
+          }
+        });
+      };
       var monitorJobs = function(intervarl, callback) {
         var self = this;
         if (typeof(callback) == 'function') {
@@ -56,6 +63,7 @@ angular.module('app')
         saveJob: saveJob,
         getJobs: getJobs,
         getJob: getJob,
+        getMisMatchPercentage: getMisMatchPercentage,
         monitorJobs: monitorJobs,
         deleteJob: deleteJob,
         getImageData: getImageData

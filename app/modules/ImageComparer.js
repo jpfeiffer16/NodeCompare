@@ -15,7 +15,13 @@ module.exports = (function () {
           });
           pngStream.on('end', function() {
             var base64 = pngBuffer.toString('base64');
-            JobDataStorage.saveImageCompareData(base64, compareId).then(function() {
+            var compareData = {
+              data: base64,
+              misMatchPercentage: data.misMatchPercentage,
+              isSameDimensions: data.isSameDimensions
+              
+            };
+            JobDataStorage.saveImageCompareData(compareData, compareId).then(function() {
               if (typeof(callback) == 'function') {
                 callback();
               }

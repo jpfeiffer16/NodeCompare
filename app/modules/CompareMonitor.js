@@ -48,8 +48,8 @@ module.exports = function (maxCompares, compareList) {
           } else {
             break;
           }
-          console.log(numberOfRunningCompares);
-          console.log(numberOfClosures);
+          // console.log(numberOfRunningCompares);
+          // console.log(numberOfClosures);
         }
         if (compareList.length == 0 && numberOfRunningCompares == 0 && numberOfClosures == 0) {
           if (self.onFinished != null) {

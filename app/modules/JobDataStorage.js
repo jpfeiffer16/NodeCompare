@@ -91,7 +91,12 @@ module.exports = (function() {
     var Promise = require('./PromiseEngine.js'),
         promise = new Promise(),
         ImageCompare = require('../models/imagecompare.js'),
-        compareImage = new ImageCompare({ _id: id, data: data.toString() });
+        compareImage = new ImageCompare({
+          _id: id,
+          data: data.data.toString(),
+          misMatchPercentage: data.misMatchPercentage,
+          isSameDimensions: data.isSameDimensions
+        });
     compareImage.save(function (err) {
       if (!err) {
         promise.resolve(true);

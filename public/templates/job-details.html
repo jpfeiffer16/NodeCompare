@@ -18,7 +18,7 @@
         <div class="compare-info" ng-repeat="compare in job.compares" ng-click="setPreview(compare.compareId)">
           <p>{{compare.sourceUrl}}</p>
           <p>{{compare.targetUrl}}</p>
-          <p><span>Similarity:</span></p>
+          <p><span>Similarity:</span><span mis-match-percentage="{{compare.compareId}}"></span></p>
           <a href="comparedetails/{{compare.compareId}}">Details</a>
         </div>
       </div>

@@ -4,7 +4,9 @@ var mongoose = require('mongoose'),
 	
 var ImageCompareSchema = new Schema({
 	_id: ObjectId,
-	data: String
+	data: String,
+  misMatchPercentage: Number,
+  isSameDimensions: Boolean
 });
 
 module.exports = mongoose.model('ImageCompare', ImageCompareSchema);
