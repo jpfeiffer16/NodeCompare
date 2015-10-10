@@ -1,13 +1,22 @@
 var express = require('express'),
-  router = express.Router();
+  router = express.Router(),
+  config = require('../../config/config'),
+  fs = require('fs');
 
 module.exports = function (app) {
   app.use('/', router);
 };
 
 var renderApp = function (res) {
+  var directives = fs.readdirSync(config.root + '/public/js/directives');
+  var services = fs.readdirSync(config.root + '/public/js/services');
+  var controllers = fs.readdirSync(config.root + '/public/js/controllers');
+  
   res.render('app', {
-    title: 'App'
+    title: 'App',
+    directives: directives,
+    services: services,
+    controllers: controllers
   });
 }
 //Mirror all the angular views so that we don't get any hanging urls

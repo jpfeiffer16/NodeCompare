@@ -46,6 +46,16 @@ angular.module('app')
           }
         });
       };
+      function getCommpareSource(sourceId, targetId, callback) {
+        $http.post('getcomparesource', {
+          sourceId: sourceId,
+          targetId: targetId
+        }).then(function (result) {
+          if (typeof(callback) == 'function') {
+            callback(result);
+          }
+        });
+      };
       var monitorJobs = function(intervarl, callback) {
         var self = this;
         if (typeof(callback) == 'function') {
@@ -64,6 +74,7 @@ angular.module('app')
         getJobs: getJobs,
         getJob: getJob,
         getMisMatchPercentage: getMisMatchPercentage,
+        getCommpareSource: getCommpareSource,
         monitorJobs: monitorJobs,
         deleteJob: deleteJob,
         getImageData: getImageData

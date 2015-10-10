@@ -22,7 +22,7 @@ angular.module('app', ['ngRoute', 'ngAnimate'])
         templateUrl: '/templates/job-details.html'
         // controller: 'JobDetailsCtrl'
       })
-      .when('/comparedetails/:id', {
+      .when('/comparedetails/:compareid/:sourceid/:targetid', {
         templateUrl: '/templates/compare-details.html'
         // controller: 'JobDetailsCtrl'
       })

@@ -1,10 +1,13 @@
 <div class="content" ng-controller="CompareDetailsCtrl">
-  <h4 class="tab-control" target="#tab-image">Image Compare</h4>
-  <h4 class="tab-control" target="#tab-source">Source Compare</h4>
-  <div id="tab-image" class="tab">
+  <h4 tab-control class="tab-control" target="#tab-image">Image Compare</h4>
+  <h4 tab-control class="tab-control" target="#tab-source">Source Compare</h4>
+  <div id="tab-image" class="tab tab-active">
     <img src="compareimageprovider/{{compareId}}">
   </div>
   <div id="tab-source" class="tab">
-    <!--TODO: write new angulare directive to show the source diff-->
+    <div source-diff class="diff" source-id="" target-id=""></div>
   </div>  
-</div>
+</div
+
+<script src="../js/plugins/diff_match_patch.js"></script>
+<script src="../js/plugins/jquery.prettytextdiff.js"></script>
