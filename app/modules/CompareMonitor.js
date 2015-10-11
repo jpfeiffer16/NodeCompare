@@ -27,7 +27,7 @@ module.exports = function (maxCompares, compareList) {
                 JobDataStorage.saveSourceData(info.sourceData, thisCompare.sourceId);
               });
               var targetPromise = PageInfoGetter.getInfo(thisCompare.targetUrl, thisCompare.targetId);
-              targetPromise.then(function(info) { 
+              targetPromise.then(function(info) {
                 targetImageSavePromise = JobDataStorage.saveImageData(info.imageData, thisCompare.targetId);
                 JobDataStorage.saveSourceData(info.sourceData, thisCompare.targetId);
               });

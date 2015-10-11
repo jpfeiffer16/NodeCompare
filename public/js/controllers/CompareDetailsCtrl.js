@@ -4,5 +4,4 @@ angular.module('app')
     $scope.compareId = $routeParams.compareid;
     $scope.sourceId = $routeParams.sourceid;
     $scope.targetId = $routeParams.targetid;
-    
   });

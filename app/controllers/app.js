@@ -47,3 +47,7 @@ router.get('/about', function(req, res, next) {
 router.get('/settings', function(req, res, next) {
   renderApp(res);
 });
+
+router.get('/comparedetails/:compareid/:sourceid/:targetid', function(req, res, next) {
+  renderApp(res);
+});
