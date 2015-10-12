@@ -4,8 +4,8 @@ angular.module('app')
     return {
       link: function(scope, element, attrs) {
         JobInterface.getCommpareSource(attrs['sourceId'], attrs['targetId'], function(result) {
-          var sourceSource = result.source;
-          var targetSource = result.target;
+          var sourceSource = result.data.source;
+          var targetSource = result.data.target;
           element.prettyTextDiff({
             originalContent: sourceSource,
             changedContent: targetSource,

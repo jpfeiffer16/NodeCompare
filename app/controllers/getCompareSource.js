@@ -7,7 +7,7 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
-router.post('getcomparesource', function(req, res, next) {
+router.post('/getcomparesource', function(req, res, next) {
   var sourceId = req.body.sourceId;
   var targetId = req.body.targetId
   
