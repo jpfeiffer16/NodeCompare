@@ -1,4 +1,5 @@
 node_modules/
 temp/
 public/components
+public/css
 .sass-cache

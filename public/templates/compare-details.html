@@ -1,6 +1,7 @@
 <div class="content" ng-controller="CompareDetailsCtrl">
   <h4 tab-control class="tab-control active" target="#tab-image">Image Compare</h4>
   <h4 tab-control class="tab-control" target="#tab-source">Source Compare</h4>
+  <h4 tab-control class="tab-control" target="#tab-info">More Info</h4>
   <div id="tab-image" class="tab tab-active">
     <img src="compareimageprovider/{{compareId}}">
   </div>
@@ -8,7 +9,10 @@
     <div source-compare source-id="{{sourceId}}" target-id="{{targetId}}">
       <div class="container diff"></div>
     </div>
-  </div>  
+  </div>
+  <div id="tab-info" class="tab">
+    
+  </div>
 </div>
 
 <script src="../js/plugins/diff_match_patch.js"></script>
