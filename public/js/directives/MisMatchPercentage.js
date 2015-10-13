@@ -5,7 +5,7 @@ angular.module('app')
       link: function(scope, element, attrs) {
         JobInterface.getMisMatchPercentage(attrs['misMatchPercentage'], function(misMatchPercentage) {
           element.append(misMatchPercentage);
-        })
+        });
       }
     };
   });

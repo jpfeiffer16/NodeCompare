@@ -170,18 +170,23 @@ body {
 
 
 .tab-control {
-  display: inline;
+  display: inline-block;
   border-radius: 5px 5px 0 0;
-  /*width: 50%;*/
   padding: 6px;
   background-color: darkgray;
   cursor: pointer;
+  margin: 0;
+}
+
+.tab-control.active {
+  background-color: #62798C;
 }
 
 .tab {
   position: absolute;
   width: 100%;
   opacity: 0;
+  background-color: #62798C;
   /*display: none;*/
 }
 
