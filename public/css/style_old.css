@@ -1,0 +1,246 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.preview-image {
+  width: 100%;
+}
+
+.preview-container {
+  position: fixed;
+  width: 500px;
+  right: 0px;
+  top: 35px;
+}
+
+.compare-info {
+  margin: 10px 0px;
+  background-color: #5F5D67;
+}
+
+.compare-info:hover {
+  transition-property: margin-left;
+  transition-duration: 400ms;
+  margin-left: 5px;
+  background-color: gray;
+  cursor: pointer;
+}
+
+.hover-pointer:hover {
+  cursor: pointer;
+}
+
+body {
+  padding: 0px;
+  background-color: #5F5D67;
+  position: relative;
+}
+
+#cover {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: fixed;
+  top: 0px;
+  background-color: rgba(46, 49, 51, 0.64);
+  z-index: 20;
+}
+
+.slide-out-nav a {
+  color: white;
+}
+
+.slide-out-nav a:hover {
+  text-decoration: none;
+}
+
+.slide-out-nav {
+  transition: left;
+  transition-duration: 300ms;
+  width: 250px;
+  height: 100vh;
+  background-color: darkgray;
+  color: white;
+  position: fixed;
+  top: 0px;
+  z-index: 1000;
+  left: -250px;
+  font-size: 16px;
+}
+
+.slide-out-nav.active {
+  transition: left;
+  transition-duration: 300ms;
+  left: 0px;
+}
+
+.slide-out-nav.hidden {
+  transition: left;
+  transition-duration: 300ms;
+  left: -250px;
+}
+
+.slide-out-nav .title {
+  height: 50px;
+  font-size: 17px;
+  color: ghostwhite;
+  text-align: center;
+}
+
+.slide-out-nav .title span {
+  display: block;
+  padding-top: 16px;
+}
+
+.slide-out-nav ul {
+  width: 100%;
+  list-style: none;
+  padding: 0px 0px;
+}
+
+
+/*.slide-out-nav ul li {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  vertical-align: middle;
+}*/
+
+.slide-out-nav ul li span {
+  padding: 13px 8px;
+  display: inline-block;
+}
+
+.slide-out-nav ul li:hover {
+  background-color: #5F5D67;
+}
+
+.content {
+  position: relative;
+  margin-top: 35px;
+} 
+
+
+
+
+.ribbon.top div {
+  display: inline-block;
+}
+
+.ribbon.top .right {
+  float: right;
+}
+
+.ribbon.top .center {
+  text-align: center;
+}
+
+.ribbon.top {
+  width: 100%;
+  background: darkgray;
+  position: fixed;
+  top: 0px;
+  z-index: 19;
+}
+
+.ribbon.top .btn {
+  margin: auto;
+  background-image: inherit;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.ribbon.top .red {
+  color: red;
+}
+
+.ribbon.top .gray {
+ color: lightgray;
+}
+
+.ribbon.top .green {
+  color: green;
+}
+
+
+.tab-control {
+  display: inline-block;
+  border-radius: 5px 5px 0 0;
+  padding: 6px;
+  background-color: darkgray;
+  cursor: pointer;
+  margin: 0;
+}
+
+.tab-control.active {
+  background-color: #62798C;
+}
+
+.tab {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  background-color: #62798C;
+  /*display: none;*/
+}
+
+.tab.tab-active {
+  transition-property: opacity;
+  transition-duration: 300ms;
+  opacity: 1;
+  /*display: block;*/
+}
+
+/*Diffs*/
+
+ins {
+    background-color: #c6ffc6;
+    text-decoration: none;
+}
+
+del {
+    background-color: #ffc6c6;
+}
+
+
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+
+
+
+
+
+.ng-enter {
+  /*animation: slideIn .5s both ease-in;*/
+  background-color: red !important;
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+
+
+.ng-leave {
+  /*animation: slideIn .5s both ease-in;*/
+  background-color: red !important;
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+
+
+@media screen and (max-width: 500px) {
+  #nav-filter {
+    display: none;
+  }
+}
+
