@@ -16,15 +16,9 @@
     "method-override": "~2.3.0",
     "mongoose": "~4.0.1",
     "morgan": "~1.5.0",
-    //Unused
-    "node-phantom": "^0.2.5",
     "node-resemble-js": "0.0.4",
-    //Unused
-    "node-uuid": "^1.4.3",
     "phantom": "^0.7.2",
-    "serve-favicon": "~2.2.0",
-    //Unused
-    "webshot": "^0.16.0"
+    "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

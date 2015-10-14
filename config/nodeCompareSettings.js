@@ -11,7 +11,5 @@ module.exports = {
       name: String,
       value: mongoose.Schema.Types.Mixed
     }
-    // maxConcurrentCompares: Number,
-    // userAgent: String,
   ]
 }

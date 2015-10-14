@@ -34,10 +34,10 @@ module.exports = function() {
         });
       });
     }, 
-      {
-        dnodeOpts: {
-          weak: false
-        }
+    {
+      dnodeOpts: {
+        weak: false
+      }
     });
     return promise;
   };

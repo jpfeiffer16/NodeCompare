@@ -8,12 +8,40 @@ var mongoose = require('mongoose'),
     settings = mongoose.model('settings', schema),
     machineName = OS.hostname();
 
+
+
+function cleanSettings(settings) {
+  var newSettings = [];
+  function checkSettings(defaultSetting) {
+    for (var j = 0; j < settings.length; j++) {
+      console.log(defaultSetting.name);
+      console.log(settings[j].name);
+      if (settings[j].name == defaultSetting.name)
+      {
+        //Setting exists and should be persisted
+        newSettings.push(settings[j]);
+      } else {
+        //Setting does not exist and should be added with the default value
+        newSettings.push(defaultSetting);
+      }
+    }
+    // settings.push(setting);
+  }
+  for (var i = 0; i < DefaultSettings.length; i++) {
+    checkSettings(DefaultSettings[i]);
+    console.log('checkSettings being called');
+  }
+  return newSettings;
+}
+
+
 module.exports = (function() {
   var getSettings = function(callback) {
     settings.findOne({machineName: machineName}, function(err, result) {
       if (typeof(callback) == 'function') {
         if (result != null) {
-          callback(err, result.settings);
+          var cleanedSettings = cleanSettings(result.settings);
+          callback(err, cleanedSettings);
         } else {
           //TODO: Make this more robust
           callback(null, DefaultSettings);
