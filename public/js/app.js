@@ -26,6 +26,10 @@ angular.module('app', ['ngRoute', 'ngAnimate'])
         templateUrl: '/templates/compare-details.html'
         // controller: 'JobDetailsCtrl'
       })
+      .when('/spiders', {
+        templateUrl: '/templates/spiders.html'
+        // controller: 'JobDetailsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

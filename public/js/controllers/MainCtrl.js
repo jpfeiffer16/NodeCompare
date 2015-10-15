@@ -5,6 +5,7 @@ angular.module('app')
       {name: 'Home', location: '/', icon: 'glyphicon glyphicon-home'},
       {name: 'New', location: '/new', icon: 'glyphicon glyphicon-plus'},
       {name: 'Settings', location: '/settings', icon: 'glyphicon glyphicon-cog'},
-      {name: 'About', location: '/about', icon: 'glyphicon glyphicon-comment'}
+      {name: 'About', location: '/about', icon: 'glyphicon glyphicon-comment'},
+      {name: 'Spiders', location: '/spiders', icon: 'glyphicon glyphicon-cloud'}
     ];
   });
