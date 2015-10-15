@@ -28,7 +28,6 @@ function cleanSettings(settings) {
   return newSettings;
 }
 
-
 module.exports = (function() {
   var getSettings = function(callback) {
     settings.findOne({machineName: machineName}, function(err, result) {
