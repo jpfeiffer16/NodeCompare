@@ -6,9 +6,5 @@ module.exports = [
   {
     name: 'userAgent',
     value: ''
-  },
-  {
-    name: 'testSetting',
-    value: 'test'
   }
 ]
