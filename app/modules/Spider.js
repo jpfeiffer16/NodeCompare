@@ -1,6 +1,7 @@
 module.exports = (function() {
   var phantom = require('phantom'),
-      Promise = require('./Promise.js');
+      Promise = require('./Promise.js'),
+      SettingsProvider = require('./SettingsProvider.js');
   
   
   var runspider = function(domain) {

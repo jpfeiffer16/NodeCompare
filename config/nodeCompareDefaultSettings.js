@@ -6,5 +6,9 @@ module.exports = [
   {
     name: 'userAgent',
     value: ''
+  },
+  {
+    name: 'maxSpiderProcesses',
+    value: 3
   }
 ]
