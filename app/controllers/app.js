@@ -51,3 +51,7 @@ router.get('/settings', function(req, res, next) {
 router.get('/comparedetails/:compareid/:sourceid/:targetid', function(req, res, next) {
   renderApp(res);
 });
+
+router.get('/spiders', function(req, res, next) {
+  renderApp(res);
+});

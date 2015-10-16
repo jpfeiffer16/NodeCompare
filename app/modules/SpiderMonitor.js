@@ -8,22 +8,27 @@ module.exports = function(maxProcesses, domain) {
   var phantomProcesses = [];
   
   
-  function parseUrl(ph, url) {
-    ph.createPage(function(page) {
-      page.open(url, function(status) {
-        page.evaluate(function () {
-          document.getElementsByTagName('a');
-        },
-        function(result) {
-          console.log(result);
-          
-        });
-      })
+  function parseUrl(page, url) {
+    page.open(url, function(status) {
+      // console.log('page ' + url + ' opened with status: ' + status);
+      page.evaluate(function () {
+        return document.getElementsByTagName('a');
+      },
+      function(result) {
+        // console.log(result);
+        for (var i = 0; i < result.length; i++) {
+          if (result[i] != null) {
+            addUrl(result[i].href);
+            parseUrl(page, result[i].href);
+          }
+        }
+      });
     });
   };
   
   function addUrl(url) {
     if (parsedUrls.indexOf(url) != -1) {
+      console.log(url);
       parsedUrls.push(url);
     }
   };
@@ -34,15 +39,35 @@ module.exports = function(maxProcesses, domain) {
   
   
   this.monitorSpider = function(callback) {
+    console.log('Getting here');
     phantom.create(function(ph) {
-      parseUrl(ph, domain);
+      // parseUrl(page, domain);
       //Hacky
-      setTimeout(function () {
-        ph.exit();
-        if (typeof(callback) == 'function') {
-          callback();
-        }
-      }, 6000);
+      
+      // console.log('Phantom Process created');
+      
+      ph.createPage(function(page) {
+        console.log('Page created');
+        parseUrl(page, domain);
+        // page.open(domain, function(status) {
+        //   console.log('page ' + domain + ' opened with status: ' + status);
+        //   page.evaluate(function () {
+        //     return document.getElementsByTagName('a');
+        //   },
+        //   function(result) {
+        //     console.log(result);
+        //     
+        //   });
+        // });
+      });
+      
+      
+      // setTimeout(function () {
+      //   ph.exit();
+      //   if (typeof(callback) == 'function') {
+      //     callback();
+      //   }
+      // }, 6000);
     },
     {
       dnodeOpts: {
