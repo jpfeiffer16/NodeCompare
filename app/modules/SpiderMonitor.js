@@ -58,14 +58,6 @@ module.exports = function(maxProcesses, domain) {
           //   });
           // });
         });
-        
-        
-        // setTimeout(function () {
-        //   ph.exit();
-        //   if (typeof(callback) == 'function') {
-        //     callback();
-        //   }
-        // }, 6000);
       },
       {
         dnodeOpts: {

@@ -3,6 +3,7 @@ var Promise = function () {
   self.isResolved = false;
   var fulfilledHandlers = [];
   var rejectedHandlers = [];
+  var updatedHandlers = [];
   
   self.resolve = function(isFulfilled, data) {
     if (isFulfilled) {
@@ -25,6 +26,18 @@ var Promise = function () {
       rejectedHandlers.push(onRejected);
     }
   };
+    
+  self.updated = function(fn) {
+    if (typeof(fn) == 'function') {
+      updatedHandlers.push(fn);
+    }
+  };
+  
+  self.update = function(data) {
+    updatedHandlers.forEach(function(fn) {
+      fn(data);
+    });
+  }
   
   self.when = function (firstPromise, secondPromise) {
     var that = this;
