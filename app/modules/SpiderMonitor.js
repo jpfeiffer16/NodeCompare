@@ -24,7 +24,7 @@ module.exports = function(maxProcesses, domain) {
   };
   
   function addUrl(url) {
-    if (parsedUrls.indexOf(url) != -1) {
+    if (parsedUrls.indexOf(url) == -1) {
       console.log(url);
       parsedUrls.push(url);
     }
