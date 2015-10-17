@@ -1,6 +1,3 @@
-
-
-
 module.exports = function(maxProcesses, domain) {
   var phantom = require('phantom');
   var parsedUrls = [];
@@ -36,44 +33,49 @@ module.exports = function(maxProcesses, domain) {
   
   
   
-  
-  
   this.monitorSpider = function(callback) {
     console.log('Getting here');
-    phantom.create(function(ph) {
-      // parseUrl(page, domain);
-      //Hacky
-      
-      // console.log('Phantom Process created');
-      
-      ph.createPage(function(page) {
-        console.log('Page created');
-        parseUrl(page, domain);
-        // page.open(domain, function(status) {
-        //   console.log('page ' + domain + ' opened with status: ' + status);
-        //   page.evaluate(function () {
-        //     return document.getElementsByTagName('a');
-        //   },
-        //   function(result) {
-        //     console.log(result);
-        //     
-        //   });
-        // });
+    
+    
+    for (var i = 0; i < maxProcesses; i++) {
+      phantom.create(function(ph) {
+        // parseUrl(page, domain);
+        //Hacky
+        
+        // console.log('Phantom Process created');
+        
+        ph.createPage(function(page) {
+          console.log('Page created');
+          parseUrl(page, domain);
+          // page.open(domain, function(status) {
+          //   console.log('page ' + domain + ' opened with status: ' + status);
+          //   page.evaluate(function () {
+          //     return document.getElementsByTagName('a');
+          //   },
+          //   function(result) {
+          //     console.log(result);
+          //     
+          //   });
+          // });
+        });
+        
+        
+        // setTimeout(function () {
+        //   ph.exit();
+        //   if (typeof(callback) == 'function') {
+        //     callback();
+        //   }
+        // }, 6000);
+      },
+      {
+        dnodeOpts: {
+          weak: false
+        }
       });
       
       
-      // setTimeout(function () {
-      //   ph.exit();
-      //   if (typeof(callback) == 'function') {
-      //     callback();
-      //   }
-      // }, 6000);
-    },
-    {
-      dnodeOpts: {
-        weak: false
-      }
-    });
+    }
+    
   };
   
   
