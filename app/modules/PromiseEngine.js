@@ -1,9 +1,9 @@
 var Promise = function () {
   var self = this;
   self.isResolved = false;
-  var fulfilledHandlers = [];
-  var rejectedHandlers = [];
-  var updatedHandlers = [];
+  var fulfilledHandlers = [],
+      rejectedHandlers = [],
+      updatedHandlers = [];
   
   self.resolve = function(isFulfilled, data) {
     if (isFulfilled) {

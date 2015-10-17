@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 var express = require('express'),
-  router = express.Router(),
-  ImageCompare = require('../models/imagecompare.js');
+    router = express.Router(),
+    ImageCompare = require('../models/imagecompare.js');
   
 module.exports = function (app) {
   app.use('/', router);

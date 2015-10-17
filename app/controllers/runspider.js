@@ -6,7 +6,6 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
-
 router.post('/runSpider', function(req, res, next) {
   var domain = req.body.domain;
   Spider.runspider(domain);

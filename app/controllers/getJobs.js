@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 var express = require('express'),
-  router = express.Router(),
-  Job = require('../models/job.js');
+    router = express.Router(),
+    Job = require('../models/job.js');
   
 module.exports = function (app) {
   app.use('/', router);

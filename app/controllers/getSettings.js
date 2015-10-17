@@ -1,6 +1,6 @@
 var express = require('express'),
-  router = express.Router(),
-  SettingsProvider = require('../modules/SettingsProvider.js');
+    router = express.Router(),
+    SettingsProvider = require('../modules/SettingsProvider.js');
 
 module.exports = function (app) {
   app.use('/', router);

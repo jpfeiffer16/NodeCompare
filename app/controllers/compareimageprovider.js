@@ -1,7 +1,7 @@
 var express = require('express'),
-  router = express.Router(),
-  mongoose = require('mongoose'),
-  ImageCompare = require('../models/imagecompare.js');
+    router = express.Router(),
+    mongoose = require('mongoose'),
+    ImageCompare = require('../models/imagecompare.js');
 
 module.exports = function (app) {
   app.use('/', router);

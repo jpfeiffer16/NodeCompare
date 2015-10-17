@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 var express = require('express'),
-  router = express.Router(),
-  Job = require('../models/job.js');
+    router = express.Router(),
+    Job = require('../models/job.js');
   
 module.exports = function (app) {
   app.use('/', router);
@@ -9,7 +9,7 @@ module.exports = function (app) {
 
 router.post('/getJob/:id', function(req, res, next) {
   var id = req.params.id;
-    Job.findOne({_id: id})
+  Job.findOne({_id: id})
     .exec(function(err, result) {
       if (!err) {
         res.send(result);

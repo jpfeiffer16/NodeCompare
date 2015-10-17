@@ -1,16 +1,16 @@
 var express = require('express'),
-  router = express.Router(),
-  config = require('../../config/config'),
-  fs = require('fs');
+    router = express.Router(),
+    config = require('../../config/config'),
+    fs = require('fs');
 
 module.exports = function (app) {
   app.use('/', router);
 };
 
 var renderApp = function (res) {
-  var directives = fs.readdirSync(config.root + '/public/js/directives');
-  var services = fs.readdirSync(config.root + '/public/js/services');
-  var controllers = fs.readdirSync(config.root + '/public/js/controllers');
+  var directives = fs.readdirSync(config.root + '/public/js/directives'),
+      services = fs.readdirSync(config.root + '/public/js/services'),
+      controllers = fs.readdirSync(config.root + '/public/js/controllers');
   
   res.render('app', {
     title: 'App',

@@ -1,8 +1,8 @@
 module.exports = function (maxCompares, compareList) {
-  var self = this;
-  var numberOfRunningCompares = 0;
-  var numberOfClosures = 0;
   this.onFinished = null;
+  var self = this,
+    numberOfRunningCompares = 0,
+    numberOfClosures = 0;
   
   function monitorCompares() {
     process.nextTick(function () {
@@ -10,7 +10,6 @@ module.exports = function (maxCompares, compareList) {
           JobDataStorage = require('./JobDataStorage.js'),
           ImageComparer = require('./ImageComparer.js'),
           Promise = require('./PromiseEngine.js');
-          // SourceComparer = require('./SourceComparer.js');
       
       if (maxCompares > compareList.lenth) {
         maxCompares = compareList.length;
@@ -19,8 +18,8 @@ module.exports = function (maxCompares, compareList) {
         while (numberOfRunningCompares <= maxCompares) {
           if (compareList.length != 0 ) {
             (function (thisCompare) {
-              var sourceImageSavePromise = new Promise();
-              var targetImageSavePromise = new Promise();
+              var sourceImageSavePromise = new Promise(),
+                  targetImageSavePromise = new Promise();
               var sourcePromise = PageInfoGetter.getInfo(thisCompare.sourceUrl, thisCompare.sourceId);
               sourcePromise.then(function(info) {
                 sourceImageSavePromise = JobDataStorage.saveImageData(info.imageData, thisCompare.sourceId);
@@ -39,8 +38,6 @@ module.exports = function (maxCompares, compareList) {
                     numberOfClosures--;
                     console.log('Compare completed');
                   });
-                  //Not sure we actually need to compare the sources on the server.
-                  // SourceComparer.compareSources('This is a test', 'This is a super test');
                 });
               });
               numberOfRunningCompares++;
@@ -48,8 +45,6 @@ module.exports = function (maxCompares, compareList) {
           } else {
             break;
           }
-          // console.log(numberOfRunningCompares);
-          // console.log(numberOfClosures);
         }
         if (compareList.length == 0 && numberOfRunningCompares == 0 && numberOfClosures == 0) {
           if (self.onFinished != null) {

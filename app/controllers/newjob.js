@@ -7,9 +7,9 @@ module.exports = function (app) {
 };
 
 router.post('/newjob', function(req, res, next) {
-  var JobDataStorage = require('../modules/JobDataStorage');
+  var JobDataStorage = require('../modules/JobDataStorage'),
+      jobToAdd = req.body;
   
-  var jobToAdd = req.body;
   JobDataStorage.processJob(jobToAdd, function() {
     console.log('Job finished processing');
   });
