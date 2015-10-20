@@ -6,26 +6,36 @@ module.exports = function(maxProcesses, domain) {
   
   
   function parseUrl(page, url) {
+    // console.log(page);
     page.open(url, function(status) {
       // console.log('page ' + url + ' opened with status: ' + status);
       page.evaluate(function () {
         return document.getElementsByTagName('a');
       },
       function(result) {
-        // console.log(result);
+        // console.log(result.length);
         for (var i = 0; i < result.length; i++) {
           if (result[i] != null) {
+            console.log(result[i].href);
             addUrl(result[i].href);
-            parseUrl(page, result[i].href);
           }
         }
+        var index = 0;
+        for (var i = 0; i< result.length; i++) {
+          if (result[i] != url && result[i] != null) {
+            index = i;
+            break;
+          }
+        }
+        parseUrl(page, result[index].href);
       });
     });
   };
   
   function addUrl(url) {
+    console.log(url);
     if (parsedUrls.indexOf(url) == -1) {
-      console.log(url);
+      // console.log(url);
       parsedUrls.push(url);
     }
   };
