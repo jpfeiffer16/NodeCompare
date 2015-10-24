@@ -3,11 +3,11 @@ module.exports = (function() {
   var processJob = function (job, callback) {
     process.nextTick(function() {
       saveJobData(job, function(jobWithIds) {
+        //TODO: When moving to the shared computing pattern, queued compares should be entered here.
         var SettingsProvider = require('./SettingsProvider.js'),
             CompareMonitor = require('./CompareMonitor.js'),
             compareList = jobWithIds.compares;
         SettingsProvider.getSetting('maxConcurrentCompares', function(maxConcurrentCompares) {
-          console.log('newing up monitor');
           var comparer = new CompareMonitor(maxConcurrentCompares, compareList);
           comparer.monitorCompares().done(function () {
             console.log('Yay! We made it.');

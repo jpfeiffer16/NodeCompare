@@ -10,5 +10,13 @@ module.exports = [
   {
     name: 'maxSpiderProcesses',
     value: 3
+  },
+  {
+    name: 'ProccessQueuedItem',
+    value: false
+  },
+  {
+    name: 'QueueCheckInterval',
+    value: 1000
   }
 ]
