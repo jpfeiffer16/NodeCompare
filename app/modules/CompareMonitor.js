@@ -1,76 +1,80 @@
-module.exports = function (maxCompares, compareList) {
-  this.onFinished = null;
-  var self = this,
-    numberOfRunningCompares = 0,
-    numberOfClosures = 0;
+/// <reference path="../../typings/tsd.d.ts" />
+var PageInfoGetter = require('./PageInfoGetter.js'),
+    JobDataStorage = require('./JobDataStorage.js'),
+    ImageComparer = require('./ImageComparer.js'),
+    Promise = require('./PromiseEngine.js'),
+    QueuedCompare = require('../models/queuedCompare.js');
+
+
+
+
+module.exports = function (maxCompares) {
   
-  function monitorCompares() {
-    process.nextTick(function () {
-      var PageInfoGetter = require('./PageInfoGetter.js'),
-          JobDataStorage = require('./JobDataStorage.js'),
-          ImageComparer = require('./ImageComparer.js'),
-          Promise = require('./PromiseEngine.js');
-      
-      if (maxCompares > compareList.lenth) {
-        maxCompares = compareList.length;
-      }
-      (function checkCompares() {
-        while (numberOfRunningCompares <= maxCompares) {
-          if (compareList.length != 0 ) {
-            (function (thisCompare) {
-              var sourceImageSavePromise = new Promise(),
-                  targetImageSavePromise = new Promise();
-              var sourcePromise = PageInfoGetter.getInfo(thisCompare.sourceUrl, thisCompare.sourceId);
-              sourcePromise.then(function(info) {
-                sourceImageSavePromise = JobDataStorage.saveImageData(info.imageData, thisCompare.sourceId);
-                JobDataStorage.saveSourceData(info.sourceData, thisCompare.sourceId);
-              });
-              var targetPromise = PageInfoGetter.getInfo(thisCompare.targetUrl, thisCompare.targetId);
-              targetPromise.then(function(info) {
-                targetImageSavePromise = JobDataStorage.saveImageData(info.imageData, thisCompare.targetId);
-                JobDataStorage.saveSourceData(info.sourceData, thisCompare.targetId);
-              });
-              sourcePromise.when(sourcePromise, targetPromise).then(function() {
-                numberOfRunningCompares--;
-                numberOfClosures++;
-                sourceImageSavePromise.when(sourceImageSavePromise, targetImageSavePromise).then(function() {
-                  ImageComparer.compareImages(thisCompare.compareId, thisCompare.sourceId, thisCompare.targetId, function () {
-                    numberOfClosures--;
-                    console.log('Compare completed');
-                  });
+  var numberOfRunningCompares = 0;
+  // var numberOfAvailableCompares = null;
+  var numberOfClosures = 0;
+  var onFinished = null;
+  
+  var self = this;
+  
+  function processCompares(callback) {
+    QueuedCompare.count(function(err, count) {
+      if (count != 0 && numberOfRunningCompares <= maxCompares) {
+        QueuedCompare.findOneAndRemove(null, function (err, doc) {
+          if (!err) {
+            //Do processing
+            console.dir(doc);
+            var sourceImageSavePromise = new Promise(),
+                targetImageSavePromise = new Promise();
+            var sourcePromise = PageInfoGetter.getInfo(doc.sourceUrl, doc.sourceId);
+            sourcePromise.then(function(info) {
+              sourceImageSavePromise = JobDataStorage.saveImageData(info.imageData, doc.sourceId);
+              JobDataStorage.saveSourceData(info.sourceData, doc.sourceId);
+            });
+            var targetPromise = PageInfoGetter.getInfo(doc.targetUrl, doc.targetId);
+            targetPromise.then(function(info) {
+              targetImageSavePromise = JobDataStorage.saveImageData(info.imageData, doc.targetId);
+              JobDataStorage.saveSourceData(info.sourceData, doc.targetId);
+            });
+            sourcePromise.when(sourcePromise, targetPromise).then(function() {
+              numberOfRunningCompares--;
+              numberOfClosures++;
+              sourceImageSavePromise.when(sourceImageSavePromise, targetImageSavePromise).then(function() {
+                ImageComparer.compareImages(doc.compareId, doc.sourceId, doc.targetId, function () {
+                  numberOfClosures--;
+                  console.log('Compare completed');
                 });
               });
-              numberOfRunningCompares++;
-            })(compareList.pop());
-          } else {
-            break;
-          }
-        }
-        if (compareList.length == 0 && numberOfRunningCompares == 0 && numberOfClosures == 0) {
-          if (self.onFinished != null) {
-            JobDataStorage.removeTempImages(function(err) {
-              if (!err) {
-                console.log('Temp files deleted');
-              } else {
-                console.log('Unable to delete temp files');
-              }
             });
-            self.onFinished();
+            numberOfRunningCompares++;
           }
-        } else {
-          setTimeout(checkCompares, 400);
+        });
+      }
+      if (count != 0 && numberOfRunningCompares != 0 && numberOfClosures != 0) {
+        self.processCompares();
+      } else {
+        if (onFinished != null){
+          JobDataStorage.removeTempImages(function(err) {
+            if (!err) {
+              console.log('Temp files deleted');
+            } else {
+              console.log('Unable to delete temp files');
+            }
+          });
+          onFinished();
         }
-      })();
+      }
     });
+  }
+  
+  this.monitorCompares = function() {
+    processCompares();
     return {
       done: function(callback) {
         if (typeof(callback) == 'function') {
-          self.onFinished = callback;
+          onFinished = callback();
         }
       }
-    } 
-  }
-  return {
-    monitorCompares: monitorCompares
+    };
   };
 };

@@ -11,7 +11,11 @@ router.post('/getcomparemismatch/:id', function(req, res, next) {
   var id = req.params.id;
   ImageCompare.findOne({ _id: id }, function(err, result) {
     if (!err) {
-      res.send(result.misMatchPercentage.toString());
+      if (result!= null) {
+        res.send(result.misMatchPercentage.toString());
+      } else {
+        res.send(null);
+      }
     } else {
       res.status(404).send();
     }

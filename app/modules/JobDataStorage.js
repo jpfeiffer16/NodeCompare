@@ -2,13 +2,11 @@
 module.exports = (function() {
   var processJob = function (job, callback) {
     process.nextTick(function() {
-      saveJobData(job, function(jobWithIds) {
-        //TODO: When moving to the shared computing pattern, queued compares should be entered here.
+      saveJobData(job, function() {
         var SettingsProvider = require('./SettingsProvider.js'),
-            CompareMonitor = require('./CompareMonitor.js'),
-            compareList = jobWithIds.compares;
+            CompareMonitor = require('./CompareMonitor.js');
         SettingsProvider.getSetting('maxConcurrentCompares', function(maxConcurrentCompares) {
-          var comparer = new CompareMonitor(maxConcurrentCompares, compareList);
+          var comparer = new CompareMonitor(maxConcurrentCompares);
           comparer.monitorCompares().done(function () {
             console.log('Yay! We made it.');
             if (typeof(callback) == 'function') {
@@ -20,7 +18,7 @@ module.exports = (function() {
     });
   };
 
-  var saveJobData = function (jobWithoutIds, callback) {
+  var saveJobData1 = function (jobWithoutIds, callback) {
     var mongoose = require('mongoose'),
         Job = require('../models/job.js'),
         jobId = new mongoose.Types.ObjectId();
@@ -52,6 +50,68 @@ module.exports = (function() {
       }
     });
   };
+  
+  var saveJobData = function (jobWithoutIds, callback) {
+    var mongoose = require('mongoose'),
+        Job = require('../models/job.js'),
+        jobId = new mongoose.Types.ObjectId(),
+        QueuedCompare = require('../models/queuedCompare'),
+        Promise = require('./PromiseEngine.js');
+
+    var job = new Job({
+      _id: jobId,
+      name: jobWithoutIds.name,
+      description: jobWithoutIds.description,
+      compares: []
+    });
+
+    for (var i = 0; i < jobWithoutIds.compares.length; i++) {
+      jobWithoutIds.compares[i].sourceId = new mongoose.Types.ObjectId();
+      jobWithoutIds.compares[i].targetId = new mongoose.Types.ObjectId();
+      jobWithoutIds.compares[i].compareId = new mongoose.Types.ObjectId();
+    }
+
+    job.compares = jobWithoutIds.compares;
+    job.save(function (err) {
+      if (!err) {
+        console.log('Job Saved');
+        if (typeof(callback) == 'function') {
+          callback(job);
+        }
+      } else {
+        throw err;
+      }
+    });
+    var totalCompares = job.compares.length;
+    var queuesSavedPromise = new Promise();
+    for (var i = 0; i < job.compares.length; i++) {
+      var compare = job.compares[i];
+      (function (compare, i) {
+        var queuedCompare = new QueuedCompare({
+          _id: new mongoose.Types.ObjectId(),
+          sourceUrl: compare.sourceUrl,
+          targetUrl: compare.targetUrl,
+          sourceId: compare.sourceId,
+          targetId: compare.targetId,
+          compareId: compare.compareId
+        });
+        queuedCompare.save(function() {
+          if (i + 1 == totalCompares) {
+            queuesSavedPromise.resolve(true, null);
+          }
+        });
+      })(compare, i);
+    }
+    if (typeof(callback) == 'function') {
+      callback();
+    }
+    // queuesSavedPromise.then(function() {
+    //   SettingsProvider.getSetting('maxConcurrentCompares', function(maxConcurrentCompares) {
+    //     var monitor = new CompareMonitor(maxConcurrentCompares);
+    //     monitor.monitorCompares().done();
+    //   }
+    // });
+  };
 
   var saveImageData = function (data, id) {
     var Promise = require('./PromiseEngine.js'),
@@ -74,9 +134,9 @@ module.exports = (function() {
     var Promise = require('./PromiseEngine.js'),
     promise = new Promise(),
     Source = require('../models/source.js'),
-    source = new Source({ _id: id, data: source.toString() });
+    pageSource = new Source({ _id: id, data: source.toString() });
 
-    source.save(function (err) {
+    pageSource.save(function (err) {
       if (!err) {
         console.log('Source Saved');
         promise.resolve(true);

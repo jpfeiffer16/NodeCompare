@@ -12,7 +12,7 @@ module.exports = [
     value: 3
   },
   {
-    name: 'ProccessQueuedItem',
+    name: 'ProccessQueuedItems',
     value: false
   },
   {

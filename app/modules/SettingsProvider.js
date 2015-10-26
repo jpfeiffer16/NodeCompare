@@ -36,7 +36,6 @@ module.exports = (function() {
           var cleanedSettings = cleanSettings(result.settings);
           callback(err, cleanedSettings);
         } else {
-          //TODO: Make this more robust
           callback(null, DefaultSettings);
         }
       }
