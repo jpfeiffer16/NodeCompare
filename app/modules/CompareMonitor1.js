@@ -10,7 +10,7 @@ module.exports = function (maxCompares, compareList) {
           JobDataStorage = require('./JobDataStorage.js'),
           ImageComparer = require('./ImageComparer.js'),
           Promise = require('./PromiseEngine.js');
-      
+      //TODO: Implement this in the new compare monitor
       if (maxCompares > compareList.lenth) {
         maxCompares = compareList.length;
       }

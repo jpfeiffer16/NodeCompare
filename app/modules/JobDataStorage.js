@@ -75,9 +75,6 @@ module.exports = (function() {
     job.save(function (err) {
       if (!err) {
         console.log('Job Saved');
-        if (typeof(callback) == 'function') {
-          callback(job);
-        }
       } else {
         throw err;
       }
@@ -95,6 +92,7 @@ module.exports = (function() {
           targetId: compare.targetId,
           compareId: compare.compareId
         });
+        //TODO: This is bad. It does not work. Fix it.
         queuedCompare.save(function() {
           if (i + 1 == totalCompares) {
             queuesSavedPromise.resolve(true, null);
@@ -102,15 +100,11 @@ module.exports = (function() {
         });
       })(compare, i);
     }
-    if (typeof(callback) == 'function') {
-      callback();
-    }
-    // queuesSavedPromise.then(function() {
-    //   SettingsProvider.getSetting('maxConcurrentCompares', function(maxConcurrentCompares) {
-    //     var monitor = new CompareMonitor(maxConcurrentCompares);
-    //     monitor.monitorCompares().done();
-    //   }
-    // });
+    queuesSavedPromise.then(function() {
+      if (typeof(callback) == 'function') {
+        callback();
+      }
+    });
   };
 
   var saveImageData = function (data, id) {

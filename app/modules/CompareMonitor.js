@@ -23,7 +23,7 @@ module.exports = function (maxCompares) {
         QueuedCompare.findOneAndRemove(null, function (err, doc) {
           if (!err) {
             //Do processing
-            console.dir(doc);
+            // console.dir(doc);
             var sourceImageSavePromise = new Promise(),
                 targetImageSavePromise = new Promise();
             var sourcePromise = PageInfoGetter.getInfo(doc.sourceUrl, doc.sourceId);
@@ -50,19 +50,40 @@ module.exports = function (maxCompares) {
           }
         });
       }
-      if (count != 0 && numberOfRunningCompares != 0 && numberOfClosures != 0) {
-        self.processCompares();
-      } else {
-        if (onFinished != null){
-          JobDataStorage.removeTempImages(function(err) {
-            if (!err) {
-              console.log('Temp files deleted');
-            } else {
-              console.log('Unable to delete temp files');
-            }
-          });
+      if (count != 0) {
+        // console.log('Looping');
+        // console.log('Count:', count);
+        // console.log('numberOfRunningCompares:', numberOfRunningCompares);
+        // console.log('numberOfClosures:', numberOfClosures);
+        processCompares();
+      } 
+      // else {
+        // if (onFinished != null){
+        //   JobDataStorage.removeTempImages(function(err) {
+        //     if (!err) {
+        //       console.log('Temp files deleted');
+        //     } else {
+        //       console.log('Unable to delete temp files');
+        //     }
+        //   });
+        //   onFinished();
+        // }
+      // }
+    });
+    (function checkComplete() {
+      if (numberOfRunningCompares == 0 && numberOfClosures == 0) {
+        JobDataStorage.removeTempImages(function(err) {
+          if (!err) {
+            console.log('Temp files deleted');
+          } else {
+            console.log('Unable to delete temp files');
+          }
+        });
+        if (onFinished != null) {
           onFinished();
         }
+      } else {
+        setTimeout(checkComplete, 400);
       }
     });
   }
