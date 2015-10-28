@@ -9,7 +9,7 @@ var PageInfoGetter = require('./PageInfoGetter.js'),
 
 
 module.exports = function (maxCompares) {
-  
+  var finished = false;
   var numberOfRunningCompares = 0;
   // var numberOfAvailableCompares = null;
   var numberOfClosures = 0;
@@ -18,6 +18,24 @@ module.exports = function (maxCompares) {
   var self = this;
   
   function processCompares(callback) {
+    
+    function checkComplete() {
+      if (numberOfRunningCompares == 0) {
+        JobDataStorage.removeTempImages(function(err) {
+          if (!err) {
+            console.log('Temp files deleted');
+          } else {
+            console.log('Unable to delete temp files');
+          }
+        });
+        if (onFinished != null) {
+          onFinished();
+        }
+      } else {
+        setTimeout(checkComplete, 400);
+      }
+    };
+      
     QueuedCompare.count(function(err, count) {
       if (count != 0 && numberOfRunningCompares <= maxCompares) {
         QueuedCompare.findOneAndRemove(null, function (err, doc) {
@@ -56,7 +74,14 @@ module.exports = function (maxCompares) {
         // console.log('numberOfRunningCompares:', numberOfRunningCompares);
         // console.log('numberOfClosures:', numberOfClosures);
         processCompares();
-      } 
+        
+      }  else {
+        if (!finished) {
+          setTimeout(checkComplete, 400);
+        } else {
+          finished = true;
+        }
+      }
       // else {
         // if (onFinished != null){
         //   JobDataStorage.removeTempImages(function(err) {
@@ -70,22 +95,6 @@ module.exports = function (maxCompares) {
         // }
       // }
     });
-    (function checkComplete() {
-      if (numberOfRunningCompares == 0 && numberOfClosures == 0) {
-        JobDataStorage.removeTempImages(function(err) {
-          if (!err) {
-            console.log('Temp files deleted');
-          } else {
-            console.log('Unable to delete temp files');
-          }
-        });
-        if (onFinished != null) {
-          onFinished();
-        }
-      } else {
-        setTimeout(checkComplete, 400);
-      }
-    });
   }
   
   this.monitorCompares = function() {
@@ -93,7 +102,7 @@ module.exports = function (maxCompares) {
     return {
       done: function(callback) {
         if (typeof(callback) == 'function') {
-          onFinished = callback();
+          onFinished = callback;
         }
       }
     };
