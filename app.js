@@ -18,10 +18,13 @@ var app = express()
 
 require('./config/express')(app, config);
 
+//New Websockets initialization:
 var server = require('http').Server(app);
 var io = socket(server);
 server.listen(config.port);
 
 io.on('connect', function(socket) {
-  console.log('Connected');
+  console.log('Websockets Connected');
+  var Notifications = require('./app/modules/Notifications.js');
+  Notifications.addSocket(socket);
 });

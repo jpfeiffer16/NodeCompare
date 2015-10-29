@@ -8,6 +8,8 @@ module.exports = function (app) {
 };
 
 router.post('/getJobs', function(req, res, next) {
+  var Notifications = require('../modules/Notifications.js');
+  Notifications.broadcast('notification', 'getJobs has been called.')
   Job.find(function(err, results) {
     if (!err) {
       res.send(results);
