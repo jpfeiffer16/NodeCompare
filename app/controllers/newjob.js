@@ -1,6 +1,7 @@
 var express = require('express'),
   router = express.Router(),
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  Notifications = require('../modules/Notifications.js');
   
 module.exports = function (app) {
   app.use('/', router);
@@ -14,4 +15,5 @@ router.post('/newjob', function(req, res, next) {
     console.log('Job finished processing');
   });
   res.send({});
+  Notifications.broadcast('notification', 'New job has been created');
 });
