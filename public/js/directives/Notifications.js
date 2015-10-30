@@ -4,11 +4,11 @@ angular.module('app')
     return {
       link: function(scope, element, attrs) {
         setTimeout(function() {
-          console.log('Notifications initializing');
-          element.hide();
           WebSockets.getSocket(function(socket) {
             socket.on('notification', function(message) {
-              console.log('Notification: ', message);
+              element.empty();
+              element.append('<p>Notification: ' + message + '</p>');
+              element.fadeIn().fadeOut(5000);
             });
           });
         }, 3000);

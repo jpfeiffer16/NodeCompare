@@ -4,6 +4,7 @@ body {
   padding: 0px;
   background-color: #5F5D67;
   position: relative;
+  min-height: calc(100vh - 55px);
 }
 a {
   color: #00B7FF;
@@ -150,6 +151,25 @@ a {
   transition-duration: 300ms;
   opacity: 1;
   display: block;
+}
+.notification-area {
+  width: 20%;
+  height: 10%;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.61);
+  color: white;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: rgba(93, 65, 65, 0.66);
+  text-align: center;
+  display: none;
+}
+.notification-area p {
+  margin: auto;
+  display: block;
+  margin-top: 45px;
 }
 /*Diffs*/
 ins {

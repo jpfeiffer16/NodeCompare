@@ -20,7 +20,7 @@ module.exports = function (maxCompares) {
   function processCompares(callback) {
     
     function checkComplete() {
-      if (numberOfRunningCompares == 0) {
+      if (numberOfRunningCompares == 0 && numberOfClosures == 0) {
         JobDataStorage.removeTempImages(function(err) {
           if (!err) {
             console.log('Temp files deleted');
@@ -35,7 +35,7 @@ module.exports = function (maxCompares) {
         setTimeout(checkComplete, 400);
       }
     };
-      
+    
     QueuedCompare.count(function(err, count) {
       if (count != 0 && numberOfRunningCompares <= maxCompares) {
         QueuedCompare.findOneAndRemove(null, function (err, doc) {

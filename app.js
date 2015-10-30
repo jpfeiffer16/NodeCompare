@@ -2,7 +2,8 @@ var express = require('express'),
   config = require('./config/config'),
   glob = require('glob'),
   mongoose = require('mongoose'),
-  socket = require('socket.io')
+  socket = require('socket.io'),
+  Notifications = require('./app/modules/Notifications.js');
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -25,6 +26,9 @@ server.listen(config.port);
 
 io.on('connect', function(socket) {
   console.log('Websockets Connected');
-  var Notifications = require('./app/modules/Notifications.js');
   Notifications.addSocket(socket);
+});
+
+io.on('disconnect', function(socket) {
+  Notifications.removeSocket(socket);
 });
