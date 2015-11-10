@@ -11,7 +11,7 @@
       <tbody>
         <tr ng-repeat="setting in settings">
           <td>{{setting.name}}</td>
-          <td><input ng-model="setting.value" type="text" class="form-control" /></td>
+          <td><input ng-model="setting.value" type="{{setting.inputType}}" class="form-control" /></td>
         </tr>
       </tbody>
     </table>

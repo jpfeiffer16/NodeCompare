@@ -1,22 +1,27 @@
 module.exports = [
   {
     name: 'maxConcurrentCompares',
-    value: 4
+    value: 4,
+    inputType: 'number'
   },
   {
     name: 'userAgent',
-    value: ''
+    value: 'Bluemodus SiteCompare Tool',
+    inputType: 'text'
   },
   {
     name: 'maxSpiderProcesses',
-    value: 3
+    value: 3,
+    inputType: 'number'
   },
   {
     name: 'ProccessQueuedItems',
-    value: false
+    value: false,
+    inputType: 'checkbox'
   },
   {
     name: 'QueueCheckInterval',
-    value: 1000
+    value: 1000,
+    inputType: 'number'
   }
 ]

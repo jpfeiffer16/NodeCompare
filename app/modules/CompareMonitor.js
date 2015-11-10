@@ -58,6 +58,7 @@ module.exports = function (maxCompares) {
               numberOfRunningCompares--;
               numberOfClosures++;
               sourceImageSavePromise.when(sourceImageSavePromise, targetImageSavePromise).then(function() {
+                console.log('Beginning of compare callback');
                 ImageComparer.compareImages(doc.compareId, doc.sourceId, doc.targetId, function () {
                   numberOfClosures--;
                   console.log('Compare completed');
