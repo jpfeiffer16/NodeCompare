@@ -15,11 +15,12 @@ module.exports = function (maxCompares) {
   var numberOfClosures = 0;
   var onFinished = null;
   
-  var self = this;
+  // var self = this;
   
   function processCompares(callback) {
     
     function checkComplete() {
+      console.log('numberOfRunningCompares: ', numberOfRunningCompares, '/n numberOfClosures: ', numberOfClosures);
       if (numberOfRunningCompares == 0 && numberOfClosures == 0) {
         JobDataStorage.removeTempImages(function(err) {
           if (!err) {
@@ -39,7 +40,8 @@ module.exports = function (maxCompares) {
     QueuedCompare.count(function(err, count) {
       if (count != 0 && numberOfRunningCompares <= maxCompares) {
         QueuedCompare.findOneAndRemove(null, function (err, doc) {
-          if (!err) {
+          console.log('Doc is null: ', doc == null);
+          if (!err && doc != null) {
             //Do processing
             // console.dir(doc);
             var sourceImageSavePromise = new Promise(),

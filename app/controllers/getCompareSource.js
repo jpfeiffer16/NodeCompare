@@ -12,10 +12,10 @@ router.post('/getcomparesource', function(req, res, next) {
       targetId = req.body.targetId;
   
   Source.findOne({ _id: sourceId }, function (err, result) {
-    if (!err) {
+    if (!err && result != null) {
       var sourceSource = result.data;
       Source.findOne({ _id: targetId }, function(err, result) {
-        if (!err) {
+        if (!err && result != null) {
           var targetSource = result.data;
           res.send({
             source: sourceSource,

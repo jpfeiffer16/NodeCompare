@@ -3,7 +3,9 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app",
+    "rundev" : "SET NODE_ENV=development && node app",
+    "runprod" : "SET NODE_ENV=production && node app"
   },
   "dependencies": {
     "body-parser": "~1.12.0",
