@@ -39,37 +39,42 @@ module.exports = function (maxCompares) {
     
     QueuedCompare.count(function(err, count) {
       if (count != 0 && numberOfRunningCompares <= maxCompares) {
-        QueuedCompare.findOneAndRemove(null, function (err, doc) {
-          console.log('Doc is null: ', doc == null);
-          if (!err && doc != null) {
-            //Do processing
-            // console.dir(doc);
-            var sourceImageSavePromise = new Promise(),
-                targetImageSavePromise = new Promise();
-            var sourcePromise = PageInfoGetter.getInfo(doc.sourceUrl, doc.sourceId);
-            sourcePromise.then(function(info) {
-              sourceImageSavePromise = JobDataStorage.saveImageData(info.imageData, doc.sourceId);
-              JobDataStorage.saveSourceData(info.sourceData, doc.sourceId);
-            });
-            var targetPromise = PageInfoGetter.getInfo(doc.targetUrl, doc.targetId);
-            targetPromise.then(function(info) {
-              targetImageSavePromise = JobDataStorage.saveImageData(info.imageData, doc.targetId);
-              JobDataStorage.saveSourceData(info.sourceData, doc.targetId);
-            });
-            sourcePromise.when(sourcePromise, targetPromise).then(function() {
-              numberOfRunningCompares--;
-              numberOfClosures++;
-              sourceImageSavePromise.when(sourceImageSavePromise, targetImageSavePromise).then(function() {
-                console.log('Beginning of compare callback');
-                ImageComparer.compareImages(doc.compareId, doc.sourceId, doc.targetId, function () {
-                  numberOfClosures--;
-                  console.log('Compare completed');
+        setTimeout(function() {
+          runCompares();
+        }, 300);
+        function runCompares() {
+          QueuedCompare.findOneAndRemove(null, function (err, doc) {
+            console.log('Doc is null: ', doc == null);
+            if (!err && doc != null) {
+              //Do processing
+              // console.dir(doc);
+              var sourceImageSavePromise = new Promise(),
+                  targetImageSavePromise = new Promise();
+              var sourcePromise = PageInfoGetter.getInfo(doc.sourceUrl, doc.sourceId);
+              sourcePromise.then(function(info) {
+                sourceImageSavePromise = JobDataStorage.saveImageData(info.imageData, doc.sourceId);
+                JobDataStorage.saveSourceData(info.sourceData, doc.sourceId);
+              });
+              var targetPromise = PageInfoGetter.getInfo(doc.targetUrl, doc.targetId);
+              targetPromise.then(function(info) {
+                targetImageSavePromise = JobDataStorage.saveImageData(info.imageData, doc.targetId);
+                JobDataStorage.saveSourceData(info.sourceData, doc.targetId);
+              });
+              sourcePromise.when(sourcePromise, targetPromise).then(function() {
+                numberOfRunningCompares--;
+                numberOfClosures++;
+                sourceImageSavePromise.when(sourceImageSavePromise, targetImageSavePromise).then(function() {
+                  console.log('Beginning of compare callback');
+                  ImageComparer.compareImages(doc.compareId, doc.sourceId, doc.targetId, function () {
+                    numberOfClosures--;
+                    console.log('Compare completed');
+                  });
                 });
               });
-            });
-            numberOfRunningCompares++;
-          }
-        });
+              numberOfRunningCompares++;
+            }
+          });
+        }
       }
       if (count != 0) {
         // console.log('Looping');
