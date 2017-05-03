@@ -1,15 +1,15 @@
-#NodeCompare
+# NodeCompare
 NodeCompare is a Javascript re-write of the [Bluemodus SiteCompare](https://sitecompare-2015.bluemod.us/ui) tool
 
 It focuses on performance and a general flattening and simplification of the SiteCompare architecture
-##Running the project locally:
+## Running the project locally:
 1. Pull down the repo
 2. Run `npm intall` to install dependencies
 3. Run `node app` to kick off the server and browse to localhost:3000 .
 4.  Less is used for styles. To compile it to css run: `gulp build-less`, or if you are using VS Code as your editor press `Ctr+Shift+B`
 
 
-##Some notes on development.
+## Some notes on development.
 * Will be looking at the architecture sometime in the future to see if I oversimplified it. I am running into some oddities. Don't know if it's because it's to simple or if it's a case of code-blindness :-)
 * When passing arguments arround, always prefer objects to huge argument lists.
 * Modules are your friends. They are the best defense agains the terrible daemons of Callback Hell.
