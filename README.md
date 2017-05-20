@@ -1,7 +1,7 @@
 # NodeCompare
-NodeCompare is a Javascript re-write of the [Bluemodus SiteCompare](https://sitecompare-2015.bluemod.us/ui) tool
+NodeCompare is a tool for comparing sites.
 
-It focuses on performance and a general flattening and simplification of the SiteCompare architecture
+It focuses on performance and a general flattening and simplification of the Database architecture
 ## Running the project locally:
 1. Pull down the repo
 2. Run `npm intall` to install dependencies

@@ -6,7 +6,7 @@ module.exports = [
   },
   {
     name: 'userAgent',
-    value: 'Bluemodus SiteCompare Tool',
+    value: 'NodeCompare Tool',
     inputType: 'text'
   },
   {
